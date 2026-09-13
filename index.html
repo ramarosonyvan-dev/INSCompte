@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gestion des comptes</title>
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--ink:#18212b;--muted:#66727f;--line:#dfe5ea;--accent:#087f8c;--accent2:#075f69;--danger:#b42318;--ok:#147d43}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+header{background:linear-gradient(135deg,#087f8c,#075f69);color:#fff;padding:28px 20px}
+header .wrap,.wrap{max-width:1200px;margin:auto} h1{margin:0 0 7px;font-size:28px} header p{margin:0;opacity:.9}
+main{max-width:1200px;margin:22px auto;padding:0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:20px;box-shadow:0 4px 14px #102a430d}
+h2{margin:0 0 16px;font-size:20px}.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-bottom:6px}
+input,select,button{width:100%;height:42px;border:1px solid #cbd5dc;border-radius:9px;padding:0 11px;font-size:15px;background:#fff}
+button{background:var(--accent);border:0;color:white;font-weight:700;cursor:pointer}button:hover{background:var(--accent2)}
+.actions{display:flex;gap:10px;margin-top:14px}.actions button{width:auto;padding:0 18px}.secondary{background:#eef3f5;color:#23313b}.secondary:hover{background:#e1e9ed;color:#23313b}.danger{background:#fff0ef;color:var(--danger);border:1px solid #f2c4c0}.danger:hover{background:#ffe4e1}.kpi span{display:block;color:var(--muted);font-size:13px}.kpi strong{font-size:23px;display:block;margin-top:5px}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left}th{background:#edf5f6;color:#24424a;font-size:13px}td.num{text-align:right}.positive{color:var(--ok);font-weight:700}.negative{color:var(--danger);font-weight:700}
+.empty{padding:25px;text-align:center;color:var(--muted)}
+.badge{display:inline-block;padding:4px 8px;border-radius:99px;background:#e8f5f6;color:#075f69;font-size:12px;font-weight:700}
+@media(max-width:850px){.grid{grid-template-columns:1fr 1fr}.grid .full{grid-column:1/-1}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>Gestion des comptes</h1><p>Enregistrez les entrées et sorties par employé et par compte. Le total est calculé automatiquement : <b>Sortie − Entrée</b>.</p></div></header>
+<main>
+<section class="card">
+<h2>Nouvelle opération</h2>
+<div class="grid">
+<div><label for="date">Date</label><input id="date" type="date"></div>
+<div><label for="nom">Nom employé</label><select id="nom"></select></div>
+<div><label for="compte">Nom du compte</label><select id="compte"></select></div>
+<div><label for="entree">Entrée</label><input id="entree" type="number" min="0" step="0.01" value="0" placeholder="0"></div>
+<div><label for="sortie">Sortie</label><input id="sortie" type="number" min="0" step="0.01" value="0" placeholder="0"></div>
+</div>
+<div class="actions"><button id="add">Ajouter l'opération</button><button class="secondary" id="sample">Charger l'exemple</button></div>
+</section>
+
+<section class="card">
+<h2>Résultat par date, employé et compte</h2>
+<p style="margin:-8px 0 16px;color:var(--muted);font-size:14px">
+Chaque ligne correspond au résultat d’un compte pour un employé à une date donnée.
+Le calcul est <b>Sortie − Entrée</b>. Les résultats sont classés par date.
+</p>
+<div class="table-wrap">
+<table><thead><tr><th>Date</th><th>Nom</th><th>Compte</th><th>Entrée</th><th>Sortie</th><th>Résultat</th></tr></thead>
+<tbody id="result"></tbody></table>
+<div id="empty" class="empty">Aucune opération enregistrée.</div>
+</div>
+</section>
+
+<section class="card">
+<h2>Résumé de chaque compte par date</h2>
+<p style="margin:-8px 0 16px;color:var(--muted);font-size:14px">
+Résumé de toutes les opérations pour chaque compte et chaque date.
+Le résultat est calculé avec <b>Sortie − Entrée</b>.
+</p>
+<div class="table-wrap">
+<table><thead><tr><th>Date</th><th>Compte</th><th>Résultat</th></tr></thead>
+<tbody id="accountSummary"></tbody></table>
+<div id="accountSummaryEmpty" class="empty">Aucune opération enregistrée.</div>
+</div>
+</section>
+
+<section class="card">
+<h2>Résumé par nom</h2>
+<p style="margin:-8px 0 16px;color:var(--muted);font-size:14px">
+Résultat total de chaque employé. Le calcul est <b>Sortie − Entrée</b>.
+</p>
+<div class="table-wrap">
+<table><thead><tr><th>Nom</th><th>Résultat</th></tr></thead>
+<tbody id="nameSummary"></tbody></table>
+<div id="nameSummaryEmpty" class="empty">Aucune opération enregistrée.</div>
+</div>
+</section>
+
+<section class="card">
+<h2>Historique des opérations</h2>
+<div class="actions" style="margin-top:0"><button class="danger" id="clear">Effacer toutes les opérations</button></div>
+<div class="table-wrap">
+<table><thead><tr><th>Date</th><th>Nom</th><th>Compte</th><th>Entrée</th><th>Sortie</th><th>Total</th><th></th></tr></thead>
+<tbody id="history"></tbody></table>
+<div id="historyEmpty" class="empty">Aucune opération.</div>
+</div>
+</section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/*
+  CONFIGURATION SUPABASE
+  1. Remplace YOUR_SUPABASE_ANON_KEY par la clé "anon public" de ton projet Supabase.
+  2. L'URL du projet est déjà renseignée.
+*/
+const SUPABASE_URL = "https://pszbqpxzkblkbmftknzy.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_YNq8pWr5fu2xoiJNR5ha9A__6pqRwdv";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const names=["Ravaka","Mampionina","Antso","Anja","Franck","Baba","Miary","Lanto","Radoko","Julio","Zo","Mamy"];
+const accounts=["RabaryNOM","AnjamalalaRAK","NirinaRAN","Basilah","Joelison","Sandrinah","Mamiarisoa","AinaVAL","Fredericko","Finoana","SedyRAM","Andiramampionina","MbolaRAK"];
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat("fr-FR",{minimumFractionDigits:0,maximumFractionDigits:2}).format(n);
+let ops=[];
+
+function fill(){
+  $("nom").innerHTML=names.map(x=>`<option>${x}</option>`).join("");
+  $("compte").innerHTML=accounts.map(x=>`<option>${x}</option>`).join("");
+  $("date").value=new Date().toISOString().slice(0,10);
+}
+
+async function loadOps(){
+  const {data,error}=await supabaseClient
+    .from("operations")
+    .select("*")
+    .order("date",{ascending:false})
+    .order("id",{ascending:false});
+
+  if(error){
+    console.error(error);
+    alert("Erreur Supabase : "+error.message);
+    return;
+  }
+  ops=data||[];
+  render();
+}
+
+async function addOp(o){
+  const {error}=await supabaseClient.from("operations").insert([o]);
+  if(error){
+    console.error(error);
+    alert("Impossible d'ajouter l'opération : "+error.message);
+    return;
+  }
+  await loadOps();
+}
+
+async function delOp(id){
+  if(!confirm("Supprimer cette opération ?")) return;
+  const {error}=await supabaseClient.from("operations").delete().eq("id",id);
+  if(error){
+    console.error(error);
+    alert("Impossible de supprimer l'opération : "+error.message);
+    return;
+  }
+  await loadOps();
+}
+
+async function clearAll(){
+  if(!confirm("Effacer TOUTES les opérations de la base Supabase ?")) return;
+  const {error}=await supabaseClient.from("operations").delete().not("id","is",null);
+  if(error){
+    console.error(error);
+    alert("Impossible d'effacer les opérations : "+error.message);
+    return;
+  }
+  await loadOps();
+}
+
+function render(){
+  const grouped={};
+  ops.forEach(o=>{
+    const key=o.date+"|||"+o.nom+"|||"+o.compte;
+    if(!grouped[key]) grouped[key]={date:o.date,nom:o.nom,compte:o.compte,entree:0,sortie:0};
+    grouped[key].entree+=Number(o.entree)||0;
+    grouped[key].sortie+=Number(o.sortie)||0;
+  });
+
+  const rows=Object.values(grouped)
+    .sort((a,b)=>{
+      if(a.date!==b.date) return b.date.localeCompare(a.date);
+      if(a.nom!==b.nom) return a.nom.localeCompare(b.nom);
+      return a.compte.localeCompare(b.compte);
+    })
+    .map(g=>{
+      const net=g.sortie-g.entree;
+      return `<tr>
+        <td>${g.date}</td>
+        <td><b>${g.nom}</b></td>
+        <td><span class="badge">${g.compte}</span></td>
+        <td class="num">${money(g.entree)}</td>
+        <td class="num">${money(g.sortie)}</td>
+        <td class="num ${net>=0?'positive':'negative'}"><b>${money(net)}</b></td>
+      </tr>`;
+    }).join("");
+
+  $("result").innerHTML=rows;
+  $("empty").style.display=rows?"none":"block";
+
+  const accountGrouped={};
+  ops.forEach(o=>{
+    const key=o.date+"|||"+o.compte;
+    if(!accountGrouped[key]) accountGrouped[key]={date:o.date,compte:o.compte,entree:0,sortie:0};
+    accountGrouped[key].entree+=Number(o.entree)||0;
+    accountGrouped[key].sortie+=Number(o.sortie)||0;
+  });
+
+  const accountRows=Object.values(accountGrouped)
+    .sort((a,b)=>{
+      if(a.date!==b.date) return b.date.localeCompare(a.date);
+      return a.compte.localeCompare(b.compte);
+    })
+    .map(g=>{
+      const net=g.sortie-g.entree;
+      return `<tr>
+        <td>${g.date}</td>
+        <td><span class="badge">${g.compte}</span></td>
+        <td class="num ${net>=0?'positive':'negative'}"><b>${money(net)}</b></td>
+      </tr>`;
+    }).join("");
+
+  $("accountSummary").innerHTML=accountRows;
+  $("accountSummaryEmpty").style.display=accountRows?"none":"block";
+
+  const nameGrouped={};
+  ops.forEach(o=>{
+    if(!nameGrouped[o.nom]) nameGrouped[o.nom]={nom:o.nom,entree:0,sortie:0};
+    nameGrouped[o.nom].entree+=Number(o.entree)||0;
+    nameGrouped[o.nom].sortie+=Number(o.sortie)||0;
+  });
+
+  const nameRows=Object.values(nameGrouped)
+    .sort((a,b)=>a.nom.localeCompare(b.nom))
+    .map(g=>{
+      const net=g.sortie-g.entree;
+      return `<tr>
+        <td><b>${g.nom}</b></td>
+        <td class="num ${net>=0?'positive':'negative'}"><b>${money(net)}</b></td>
+      </tr>`;
+    }).join("");
+
+  $("nameSummary").innerHTML=nameRows;
+  $("nameSummaryEmpty").style.display=nameRows?"none":"block";
+
+  const h=ops.map(o=>{
+    const net=(Number(o.sortie)||0)-(Number(o.entree)||0);
+    return `<tr>
+      <td>${o.date}</td>
+      <td>${o.nom}</td>
+      <td>${o.compte}</td>
+      <td class="num">${money(o.entree)}</td>
+      <td class="num">${money(o.sortie)}</td>
+      <td class="num ${net>=0?'positive':'negative'}">${money(net)}</td>
+      <td><button class="danger" style="width:auto;height:32px" onclick="delOp('${o.id}')">Supprimer</button></td>
+    </tr>`;
+  }).join("");
+
+  $("history").innerHTML=h;
+  $("historyEmpty").style.display=h?"none":"block";
+}
+
+$("add").onclick=async()=>{
+  const entree=Number($("entree").value)||0;
+  const sortie=Number($("sortie").value)||0;
+
+  if(entree===0&&sortie===0){
+    alert("Indiquez une entrée ou une sortie.");
+    return;
+  }
+
+  await addOp({
+    date:$("date").value,
+    nom:$("nom").value,
+    compte:$("compte").value,
+    entree,
+    sortie
+  });
+
+  $("entree").value=0;
+  $("sortie").value=0;
+};
+
+$("sample").onclick=async()=>{
+  const sample=[
+    {date:"2026-09-13",nom:"Antso",compte:"AnjamalalaRAK",entree:0,sortie:60},
+    {date:"2026-09-13",nom:"Antso",compte:"RabaryNOM",entree:0,sortie:10},
+    {date:"2026-09-13",nom:"Franck",compte:"RabaryNOM",entree:24,sortie:0},
+    {date:"2026-09-13",nom:"Franck",compte:"MbolaRAK",entree:84,sortie:0}
+  ];
+
+  const {error}=await supabaseClient.from("operations").insert(sample);
+  if(error){
+    alert("Impossible de charger l'exemple : "+error.message);
+    return;
+  }
+  await loadOps();
+};
+
+$("clear").onclick=clearAll;
+
+fill();
+loadOps();
+</script>
+</body>
+</html>
