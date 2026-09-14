@@ -5,39 +5,45 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>INSCcompte</title>
 <style>
-:root{--bg:#f4f7f9;--card:#fff;--ink:#18212b;--muted:#66727f;--line:#dfe5ea;--accent:#087f8c;--accent2:#075f69;--danger:#b42318}
+:root{
+  --bg:#f4f7f9;--card:#fff;--ink:#18212b;--muted:#66727f;
+  --line:#dfe5ea;--accent:#087f8c;--accent2:#075f69;
+  --danger:#b42318;--ok:#16794b;
+}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
 header{background:linear-gradient(135deg,#087f8c,#075f69);color:#fff;padding:22px 18px}
 .wrap{max-width:1100px;margin:auto}
 header .top{display:flex;justify-content:space-between;align-items:center;gap:15px}
-h1{margin:0;font-size:28px}
+h1{margin:0;font-size:28px} h2{margin:0 0 16px}
 main{max-width:1100px;margin:25px auto;padding:0 16px}
 .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:20px;box-shadow:0 4px 14px #102a430d}
-h2{margin:0 0 16px}
-.muted{color:var(--muted)}
-.hidden{display:none!important}
-input,button,select{width:100%;height:44px;border:1px solid #cbd5dc;border-radius:9px;padding:0 12px;font-size:15px}
+.hidden{display:none!important}.muted{color:var(--muted)}
+input,button{height:44px;border:1px solid #cbd5dc;border-radius:9px;padding:0 12px;font-size:15px}
+input{width:100%}
 button{background:var(--accent);border:0;color:#fff;font-weight:700;cursor:pointer}
 button:hover{background:var(--accent2)}
-.secondary{background:#eef3f5;color:#23313b}
-.danger{background:#fff0ef;color:var(--danger);border:1px solid #f2c4c0}
-.form{display:grid;gap:12px;max-width:430px}
-.tabs,.nav{display:flex;flex-wrap:wrap;gap:8px}
-.tabs{margin-bottom:18px}
-.tabs button,.nav button{width:auto;padding:0 15px}
+.secondary{background:#eef3f5;color:#23313b}.danger{background:#fff0ef;color:var(--danger);border:1px solid #f2c4c0}
+.small{height:36px;width:auto;padding:0 12px;font-size:13px}
+.form{display:grid;gap:12px;max-width:520px}
+.tabs,.nav,.actions{display:flex;flex-wrap:wrap;gap:8px}
+.tabs{margin-bottom:18px}.tabs button,.nav button{width:auto;padding:0 16px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .kpi{padding:18px;background:#f7fafb;border:1px solid var(--line);border-radius:12px}
-.kpi span{display:block;color:var(--muted);font-size:13px}
-.kpi strong{font-size:22px;display:block;margin-top:6px}
+.kpi span{display:block;color:var(--muted);font-size:13px}.kpi strong{font-size:22px;display:block;margin-top:6px}
 .notice{padding:12px;border-radius:9px;background:#edf5f6;margin-top:12px}
-.error{color:var(--danger);margin-top:10px}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:650px}
-th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left}
-th{background:#f7fafb}
+.error{color:var(--danger);margin-top:10px}.success{color:var(--ok);margin-top:10px}
+.table-wrap{overflow-x:auto} table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left} th{background:#f7fafb}
 .badge{display:inline-block;padding:5px 9px;border-radius:99px;background:#e8f5f6;color:#075f69;font-size:12px;font-weight:700}
+.employee-card{border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px;background:#fafcfd}
 .empty{padding:25px;text-align:center;color:var(--muted)}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.toolbar button{width:auto}
+.modal{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:16px;z-index:10}
+.modal-box{background:#fff;border-radius:14px;padding:22px;width:min(520px,100%)}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.close{width:40px;height:40px;padding:0;background:#eef3f5;color:#23313b}
 @media(max-width:700px){.grid{grid-template-columns:1fr}header .top{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
@@ -65,14 +71,14 @@ th{background:#f7fafb}
   <form id="loginForm" class="form">
     <input id="loginEmail" type="email" placeholder="Adresse e-mail" required>
     <input id="loginPassword" type="password" placeholder="Mot de passe" required>
-    <button type="submit">Se connecter</button>
+    <button>Se connecter</button>
   </form>
 
   <form id="registerForm" class="form hidden">
     <input id="regUsername" type="text" placeholder="Nom / pseudo" required>
     <input id="regEmail" type="email" placeholder="Adresse e-mail" required>
     <input id="regPassword" type="password" placeholder="Mot de passe (6 caractères minimum)" minlength="6" required>
-    <button type="submit">Créer mon compte</button>
+    <button>Créer mon compte</button>
   </form>
   <div id="authMsg"></div>
 </section>
@@ -95,17 +101,17 @@ th{background:#f7fafb}
       <div class="kpi"><span>Rôle</span><strong id="userRole">—</strong></div>
       <div class="kpi"><span>Statut</span><strong>Connecté</strong></div>
     </div>
-    <div class="notice">Ton espace est prêt. Les comptes, journées, entrées/sorties, historique et chat seront ajoutés ensuite.</div>
+    <div class="notice">La gestion des employés est maintenant active pour l'administrateur.</div>
   </div>
 
   <div id="data" class="card page hidden">
     <h2>📊 Mes données</h2>
-    <p class="muted">Cette partie sera construite ensuite.</p>
+    <p class="muted">Les comptes et journées de travail seront ajoutés à cette section.</p>
   </div>
 
   <div id="history" class="card page hidden">
     <h2>📜 Mon historique</h2>
-    <p class="muted">Cette partie sera construite ensuite.</p>
+    <p class="muted">L'historique des journées sera ajouté ensuite.</p>
   </div>
 
   <div id="chat" class="card page hidden">
@@ -117,35 +123,60 @@ th{background:#f7fafb}
     <h2>👤 Mon profil</h2>
     <form id="profileForm" class="form">
       <input id="profileUsername" type="text" placeholder="Nom / pseudo" required>
-      <button type="submit">Enregistrer mon nom</button>
+      <button>Enregistrer mon nom</button>
     </form>
     <div id="profileMsg"></div>
   </div>
 
-  <section id="admin" class="card page hidden">
-    <h2>👑 Administration</h2>
-    <p>Gestion des employés</p>
-    <div id="admin-message"></div>
-    <button id="refreshEmployees" class="secondary" style="max-width:220px;margin:10px 0 15px">🔄 Actualiser</button>
-    <div id="employeesLoading" class="empty hidden">Chargement des employés...</div>
-    <div id="employeesEmpty" class="empty hidden">Aucun employé trouvé.</div>
+  <div id="admin" class="card page hidden">
+    <div class="toolbar">
+      <div>
+        <h2>👑 Administration</h2>
+        <div class="muted">Gestion des employés</div>
+      </div>
+      <div class="actions">
+        <button id="refreshEmployees" class="secondary small">↻ Actualiser</button>
+        <button id="addEmployeeBtn" class="small">＋ Ajouter un employé</button>
+      </div>
+    </div>
+
+    <div id="adminMessage"></div>
+    <div id="employeesLoading" class="notice hidden">Chargement des employés...</div>
     <div id="employeesError" class="error"></div>
+    <div id="employeesEmpty" class="empty hidden">Aucun employé enregistré.</div>
+
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th>👤 Utilisateur</th>
-            <th>📧 Email</th>
-            <th>🔐 Rôle</th>
+            <th>👤 Nom</th>
+            <th>🔐 Compte</th>
             <th>📅 Créé le</th>
+            <th>⚙️ Actions</th>
           </tr>
         </thead>
         <tbody id="employeesList"></tbody>
       </table>
     </div>
-  </section>
+  </div>
 </section>
 </main>
+
+<div id="employeeModal" class="modal hidden">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2 id="modalTitle">Ajouter un employé</h2>
+      <button id="closeModal" class="close">×</button>
+    </div>
+    <form id="employeeForm" class="form">
+      <input id="employeeName" type="text" placeholder="Nom de l'employé" required>
+      <input id="employeeUserId" type="text" placeholder="ID utilisateur Supabase (facultatif)">
+      <button id="saveEmployeeBtn">Enregistrer</button>
+      <button type="button" id="cancelEmployeeBtn" class="secondary">Annuler</button>
+    </form>
+    <div id="employeeMsg"></div>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -156,22 +187,24 @@ const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_ANON_KEY,
   {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      detectSessionInUrl: true,
-      storage: window.localStorage
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true,
+      storage:window.localStorage
     }
   }
 );
 
 const $ = id => document.getElementById(id);
 let currentProfile = null;
+let editingEmployeeId = null;
 let starting = false;
+let enteringUserId = null;
 
 function msg(el,text,error=false){
   $(el).textContent = text;
-  $(el).className = error ? "error" : "notice";
+  $(el).className = error ? "error" : "success";
 }
 
 function escapeHtml(value){
@@ -184,13 +217,11 @@ function escapeHtml(value){
 }
 
 function showPage(id){
-  document.querySelectorAll(".page").forEach(x => x.classList.add("hidden"));
+  document.querySelectorAll(".page").forEach(x=>x.classList.add("hidden"));
   const page = $(id);
   if(!page) return;
   page.classList.remove("hidden");
-  if(id === "admin" && currentProfile?.role === "admin"){
-    loadEmployees();
-  }
+  if(id === "admin" && currentProfile?.role === "admin") loadEmployees();
 }
 
 async function loadProfile(user){
@@ -201,88 +232,68 @@ async function loadProfile(user){
     .single();
 
   if(error){
-    console.error("Erreur profil:",error);
-    currentProfile = null;
-    $("userName").textContent = user.email || "Utilisateur";
-    $("userRole").textContent = "—";
-    $("welcome").textContent = "Bonjour !";
-    $("adminBtn").classList.add("hidden");
-    return false;
+    console.error("Profil:",error);
+    return;
   }
 
   currentProfile = data;
-  $("userName").textContent = data.username || user.email || "—";
+  $("userName").textContent = data.username || "—";
   $("userRole").textContent = data.role === "admin" ? "👑 Administrateur" : "👤 Employé";
   $("welcome").textContent = "Bonjour " + (data.username || "") + " !";
   $("profileUsername").value = data.username || "";
   $("adminBtn").classList.toggle("hidden", data.role !== "admin");
-  return true;
 }
 
 async function enterApp(session){
-  if(!session) return;
+  if(!session?.user) return;
+  if(enteringUserId === session.user.id) return;
+  enteringUserId = session.user.id;
+
   $("auth").classList.add("hidden");
   $("app").classList.remove("hidden");
   $("logout").classList.remove("hidden");
+
   await loadProfile(session.user);
   showPage("home");
+  enteringUserId = null;
 }
 
 async function checkSession(){
   const {data,error} = await supabaseClient.auth.getSession();
-  if(error){
-    console.error("Erreur récupération session:",error);
-    return;
-  }
-  if(data.session){
-    await enterApp(data.session);
-  }
+  if(error){ console.error("Session:",error); return; }
+  if(data.session) await enterApp(data.session);
 }
 
-$("loginTab").onclick = () => {
+$("loginTab").onclick = ()=>{
   $("loginForm").classList.remove("hidden");
   $("registerForm").classList.add("hidden");
-  $("authMsg").textContent = "";
+  $("authMsg").textContent="";
 };
 
-$("registerTab").onclick = () => {
+$("registerTab").onclick = ()=>{
   $("loginForm").classList.add("hidden");
   $("registerForm").classList.remove("hidden");
-  $("authMsg").textContent = "";
+  $("authMsg").textContent="";
 };
 
-$("loginForm").onsubmit = async e => {
+$("loginForm").onsubmit = async e=>{
   e.preventDefault();
-  msg("authMsg","Connexion...");
   const {data,error} = await supabaseClient.auth.signInWithPassword({
-    email: $("loginEmail").value.trim(),
-    password: $("loginPassword").value
+    email:$("loginEmail").value.trim(),
+    password:$("loginPassword").value
   });
-  if(error){
-    msg("authMsg",error.message,true);
-    return;
-  }
+  if(error){ msg("authMsg",error.message,true); return; }
   await enterApp(data.session);
 };
 
-$("registerForm").onsubmit = async e => {
+$("registerForm").onsubmit = async e=>{
   e.preventDefault();
-  msg("authMsg","Création du compte...");
-  const username = $("regUsername").value.trim();
-  const email = $("regEmail").value.trim();
-  const password = $("regPassword").value;
-
   const {data,error} = await supabaseClient.auth.signUp({
-    email,
-    password,
-    options:{data:{username}}
+    email:$("regEmail").value.trim(),
+    password:$("regPassword").value,
+    options:{data:{username:$("regUsername").value.trim()}}
   });
-
-  if(error){
-    msg("authMsg",error.message,true);
-    return;
-  }
-
+  if(error){ msg("authMsg",error.message,true); return; }
   if(data.session){
     await enterApp(data.session);
   }else{
@@ -290,104 +301,167 @@ $("registerForm").onsubmit = async e => {
   }
 };
 
-$("profileForm").onsubmit = async e => {
+$("profileForm").onsubmit = async e=>{
   e.preventDefault();
   if(!currentProfile) return;
-
   const username = $("profileUsername").value.trim();
-  if(!username) return;
-
   const {data,error} = await supabaseClient
-    .from("profiles")
-    .update({username})
-    .eq("id",currentProfile.id)
-    .select()
-    .single();
+    .from("profiles").update({username})
+    .eq("id",currentProfile.id).select().single();
 
-  if(error){
-    msg("profileMsg",error.message,true);
-    return;
-  }
-
+  if(error){ msg("profileMsg",error.message,true); return; }
   currentProfile = data;
   $("userName").textContent = username;
   $("welcome").textContent = "Bonjour " + username + " !";
   msg("profileMsg","Nom enregistré.");
 };
 
+function openEmployeeModal(employee=null){
+  editingEmployeeId = employee?.id || null;
+  $("modalTitle").textContent = employee ? "Modifier un employé" : "Ajouter un employé";
+  $("employeeName").value = employee?.name || "";
+  $("employeeUserId").value = employee?.user_id || "";
+  $("employeeMsg").textContent = "";
+  $("employeeModal").classList.remove("hidden");
+  setTimeout(()=>$("employeeName").focus(),50);
+}
+
+function closeEmployeeModal(){
+  editingEmployeeId = null;
+  $("employeeModal").classList.add("hidden");
+  $("employeeForm").reset();
+  $("employeeMsg").textContent="";
+}
+
 async function loadEmployees(){
-  if(!currentProfile || currentProfile.role !== "admin") return;
+  if(currentProfile?.role !== "admin") return;
 
   $("employeesLoading").classList.remove("hidden");
+  $("employeesError").textContent="";
   $("employeesEmpty").classList.add("hidden");
-  $("employeesError").textContent = "";
-  $("employeesList").innerHTML = "";
+  $("employeesList").innerHTML="";
 
   const {data,error} = await supabaseClient
-    .from("profiles")
-    .select("id,username,role,created_at")
+    .from("employees")
+    .select("id,name,user_id,created_at")
     .order("created_at",{ascending:false});
 
   $("employeesLoading").classList.add("hidden");
 
   if(error){
-    console.error("Erreur employés:",error);
     $("employeesError").textContent = "Impossible de charger les employés : " + error.message;
     return;
   }
 
-  if(!data || data.length === 0){
+  if(!data?.length){
     $("employeesEmpty").classList.remove("hidden");
     return;
   }
 
-  $("employeesList").innerHTML = data.map(employee => {
-    const role = employee.role === "admin" ? "👑 Administrateur" : "👤 Employé";
-    const date = employee.created_at
+  data.forEach(employee=>{
+    const tr=document.createElement("tr");
+    const date=employee.created_at
       ? new Date(employee.created_at).toLocaleDateString("fr-FR")
       : "—";
-
-    return `
-      <tr>
-        <td><strong>${escapeHtml(employee.username || "Sans nom")}</strong></td>
-        <td>Non disponible dans la table profiles</td>
-        <td>${role}</td>
-        <td>${date}</td>
-      </tr>
-    `;
-  }).join("");
+    tr.innerHTML=`
+      <td><strong>${escapeHtml(employee.name)}</strong></td>
+      <td>${employee.user_id ? '<span class="badge">Compte lié</span>' : '<span class="muted">Aucun</span>'}</td>
+      <td>${date}</td>
+      <td>
+        <div class="actions">
+          <button class="small secondary edit-btn">✏️ Modifier</button>
+          <button class="small danger delete-btn">🗑️ Supprimer</button>
+        </div>
+      </td>`;
+    tr.querySelector(".edit-btn").onclick=()=>openEmployeeModal(employee);
+    tr.querySelector(".delete-btn").onclick=()=>deleteEmployee(employee);
+    $("employeesList").appendChild(tr);
+  });
 }
 
-$("refreshEmployees").onclick = loadEmployees;
+$("employeeForm").onsubmit = async e=>{
+  e.preventDefault();
+  if(currentProfile?.role !== "admin") return;
 
-$("logout").onclick = async () => {
+  const name=$("employeeName").value.trim();
+  const userId=$("employeeUserId").value.trim() || null;
+  if(!name){ msg("employeeMsg","Le nom est obligatoire.",true); return; }
+
+  $("saveEmployeeBtn").disabled=true;
+
+  let result;
+  if(editingEmployeeId){
+    result=await supabaseClient
+      .from("employees")
+      .update({name,user_id:userId})
+      .eq("id",editingEmployeeId)
+      .select().single();
+  }else{
+    result=await supabaseClient
+      .from("employees")
+      .insert({name,user_id:userId})
+      .select().single();
+  }
+
+  $("saveEmployeeBtn").disabled=false;
+
+  if(result.error){
+    msg("employeeMsg",result.error.message,true);
+    return;
+  }
+
+  closeEmployeeModal();
+  await loadEmployees();
+  msg("adminMessage",editingEmployeeId ? "Employé modifié." : "Employé ajouté.");
+};
+
+async function deleteEmployee(employee){
+  if(!currentProfile?.role==="admin") return;
+  const ok=confirm('Supprimer l’employé "'+employee.name+'", ainsi que ses journées associées ?');
+  if(!ok) return;
+
+  const {error}=await supabaseClient
+    .from("employees").delete().eq("id",employee.id);
+
+  if(error){
+    msg("adminMessage","Impossible de supprimer : "+error.message,true);
+    return;
+  }
+  msg("adminMessage","Employé supprimé.");
+  await loadEmployees();
+}
+
+$("addEmployeeBtn").onclick=()=>openEmployeeModal();
+$("refreshEmployees").onclick=loadEmployees;
+$("closeModal").onclick=closeEmployeeModal;
+$("cancelEmployeeBtn").onclick=closeEmployeeModal;
+$("employeeModal").onclick=e=>{if(e.target===$("employeeModal")) closeEmployeeModal();};
+
+$("logout").onclick=async()=>{
   await supabaseClient.auth.signOut();
-  currentProfile = null;
+  currentProfile=null;
   $("app").classList.add("hidden");
   $("logout").classList.add("hidden");
   $("auth").classList.remove("hidden");
   showPage("home");
-  $("loginForm").reset();
 };
 
-document.querySelectorAll("[data-page]").forEach(btn => {
-  btn.onclick = () => {
-    const page = btn.dataset.page;
-    if(page === "admin" && currentProfile?.role !== "admin") return;
+document.querySelectorAll("[data-page]").forEach(btn=>{
+  btn.onclick=()=>{
+    const page=btn.dataset.page;
+    if(page==="admin" && currentProfile?.role!=="admin") return;
     showPage(page);
   };
 });
 
-supabaseClient.auth.onAuthStateChange(async (_event,session) => {
-  if(session && !starting){
-    await enterApp(session);
-  }
+supabaseClient.auth.onAuthStateChange(async(_event,session)=>{
+  if(session && !starting) await enterApp(session);
 });
 
-(async () => {
-  starting = true;
+(async()=>{
+  starting=true;
   await checkSession();
-  starting = false;
+  starting=false;
 })();
 </script>
 </body>
