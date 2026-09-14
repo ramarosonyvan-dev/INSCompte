@@ -4,247 +4,43 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>INSCcompte</title>
-
 <style>
-:root{
-  --bg:#f4f7f9;
-  --card:#fff;
-  --ink:#18212b;
-  --muted:#66727f;
-  --line:#dfe5ea;
-  --accent:#087f8c;
-  --accent2:#075f69;
-  --danger:#b42318;
-}
-
+:root{--bg:#f4f7f9;--card:#fff;--ink:#18212b;--muted:#66727f;--line:#dfe5ea;--accent:#087f8c;--accent2:#075f69;--danger:#b42318}
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  background:var(--bg);
-  font-family:Arial,Helvetica,sans-serif;
-  color:var(--ink);
-}
-
-header{
-  background:linear-gradient(135deg,#087f8c,#075f69);
-  color:white;
-  padding:22px 18px;
-}
-
-.wrap{
-  max-width:1100px;
-  margin:auto;
-}
-
-header .top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-}
-
-h1{
-  margin:0;
-  font-size:28px;
-}
-
-main{
-  max-width:1100px;
-  margin:25px auto;
-  padding:0 16px;
-}
-
-.card{
-  background:white;
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:22px;
-  margin-bottom:20px;
-  box-shadow:0 4px 14px #102a430d;
-}
-
-h2{
-  margin:0 0 16px;
-}
-
-.muted{
-  color:var(--muted);
-}
-
-.hidden{
-  display:none!important;
-}
-
-input,button,select{
-  width:100%;
-  height:44px;
-  border:1px solid #cbd5dc;
-  border-radius:9px;
-  padding:0 12px;
-  font-size:15px;
-}
-
-button{
-  background:var(--accent);
-  border:0;
-  color:white;
-  font-weight:700;
-  cursor:pointer;
-}
-
-button:hover{
-  background:var(--accent2);
-}
-
-.secondary{
-  background:#eef3f5;
-  color:#23313b;
-}
-
-.danger{
-  background:#fff0ef;
-  color:var(--danger);
-  border:1px solid #f2c4c0;
-}
-
-.form{
-  display:grid;
-  gap:12px;
-  max-width:430px;
-}
-
-.tabs{
-  display:flex;
-  gap:8px;
-  margin-bottom:18px;
-}
-
-.tabs button{
-  width:auto;
-  padding:0 18px;
-}
-
-.nav{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-bottom:20px;
-}
-
-.nav button{
-  width:auto;
-  padding:0 15px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-}
-
-.kpi{
-  padding:18px;
-  background:#f7fafb;
-  border:1px solid var(--line);
-  border-radius:12px;
-}
-
-.kpi span{
-  display:block;
-  color:var(--muted);
-  font-size:13px;
-}
-
-.kpi strong{
-  font-size:22px;
-  display:block;
-  margin-top:6px;
-}
-
-.notice{
-  padding:12px;
-  border-radius:9px;
-  background:#edf5f6;
-  margin-top:12px;
-}
-
-.error{
-  color:var(--danger);
-  margin-top:10px;
-}
-
-.table-wrap{
-  overflow-x:auto;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:650px;
-}
-
-th,td{
-  padding:12px 10px;
-  border-bottom:1px solid var(--line);
-  text-align:left;
-}
-
-th{
-  background:#f7fafb;
-}
-
-.badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:99px;
-  background:#e8f5f6;
-  color:#075f69;
-  font-size:12px;
-  font-weight:700;
-}
-
-.empty{
-  padding:25px;
-  text-align:center;
-  color:var(--muted);
-}
-
-.employee-card{
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:16px;
-  margin-bottom:12px;
-  background:#fafcfd;
-}
-
-.employee-name{
-  font-size:19px;
-  font-weight:700;
-}
-
-.employee-email{
-  color:var(--muted);
-  margin-top:5px;
-}
-
-.employee-role{
-  margin-top:10px;
-}
-
-@media(max-width:700px){
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  header .top{
-    align-items:flex-start;
-    flex-direction:column;
-  }
-}
+body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+header{background:linear-gradient(135deg,#087f8c,#075f69);color:#fff;padding:22px 18px}
+.wrap{max-width:1100px;margin:auto}
+header .top{display:flex;justify-content:space-between;align-items:center;gap:15px}
+h1{margin:0;font-size:28px}
+main{max-width:1100px;margin:25px auto;padding:0 16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:20px;box-shadow:0 4px 14px #102a430d}
+h2{margin:0 0 16px}
+.muted{color:var(--muted)}
+.hidden{display:none!important}
+input,button,select{width:100%;height:44px;border:1px solid #cbd5dc;border-radius:9px;padding:0 12px;font-size:15px}
+button{background:var(--accent);border:0;color:#fff;font-weight:700;cursor:pointer}
+button:hover{background:var(--accent2)}
+.secondary{background:#eef3f5;color:#23313b}
+.danger{background:#fff0ef;color:var(--danger);border:1px solid #f2c4c0}
+.form{display:grid;gap:12px;max-width:430px}
+.tabs,.nav{display:flex;flex-wrap:wrap;gap:8px}
+.tabs{margin-bottom:18px}
+.tabs button,.nav button{width:auto;padding:0 15px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.kpi{padding:18px;background:#f7fafb;border:1px solid var(--line);border-radius:12px}
+.kpi span{display:block;color:var(--muted);font-size:13px}
+.kpi strong{font-size:22px;display:block;margin-top:6px}
+.notice{padding:12px;border-radius:9px;background:#edf5f6;margin-top:12px}
+.error{color:var(--danger);margin-top:10px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left}
+th{background:#f7fafb}
+.badge{display:inline-block;padding:5px 9px;border-radius:99px;background:#e8f5f6;color:#075f69;font-size:12px;font-weight:700}
+.empty{padding:25px;text-align:center;color:var(--muted)}
+@media(max-width:700px){.grid{grid-template-columns:1fr}header .top{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
-
 <body>
 
 <header>
@@ -253,705 +49,346 @@ th{
       <h1>INSCcompte</h1>
       <div>Gestion des employés, comptes et journées</div>
     </div>
-
-    <button id="logout" class="secondary hidden">
-      Déconnexion
-    </button>
+    <button id="logout" class="secondary hidden">Déconnexion</button>
   </div>
 </header>
 
 <main>
-
-<!-- CONNEXION -->
 <section id="auth" class="card">
-
   <h2>Bienvenue</h2>
-
-  <p class="muted">
-    Connecte-toi ou crée ton compte pour accéder au site.
-  </p>
-
+  <p class="muted">Connecte-toi ou crée ton compte pour accéder au site.</p>
   <div class="tabs">
-    <button id="loginTab">
-      Connexion
-    </button>
-
-    <button id="registerTab" class="secondary">
-      Créer un compte
-    </button>
+    <button id="loginTab">Connexion</button>
+    <button id="registerTab" class="secondary">Créer un compte</button>
   </div>
 
   <form id="loginForm" class="form">
-
-    <input
-      id="loginEmail"
-      type="email"
-      placeholder="Adresse e-mail"
-      required
-    >
-
-    <input
-      id="loginPassword"
-      type="password"
-      placeholder="Mot de passe"
-      required
-    >
-
-    <button>
-      Se connecter
-    </button>
-
+    <input id="loginEmail" type="email" placeholder="Adresse e-mail" required>
+    <input id="loginPassword" type="password" placeholder="Mot de passe" required>
+    <button type="submit">Se connecter</button>
   </form>
 
   <form id="registerForm" class="form hidden">
-
-    <input
-      id="regUsername"
-      type="text"
-      placeholder="Nom / pseudo"
-      required
-    >
-
-    <input
-      id="regEmail"
-      type="email"
-      placeholder="Adresse e-mail"
-      required
-    >
-
-    <input
-      id="regPassword"
-      type="password"
-      placeholder="Mot de passe (6 caractères minimum)"
-      minlength="6"
-      required
-    >
-
-    <button>
-      Créer mon compte
-    </button>
-
+    <input id="regUsername" type="text" placeholder="Nom / pseudo" required>
+    <input id="regEmail" type="email" placeholder="Adresse e-mail" required>
+    <input id="regPassword" type="password" placeholder="Mot de passe (6 caractères minimum)" minlength="6" required>
+    <button type="submit">Créer mon compte</button>
   </form>
-
   <div id="authMsg"></div>
-
 </section>
 
-
-<!-- APPLICATION -->
 <section id="app" class="hidden">
-
   <div class="nav">
-
-    <button data-page="home">
-      🏠 Accueil
-    </button>
-
-    <button data-page="data">
-      📊 Mes données
-    </button>
-
-    <button data-page="history">
-      📜 Mon historique
-    </button>
-
-    <button data-page="chat">
-      💬 Chat
-    </button>
-
-    <button data-page="profile">
-      👤 Mon profil
-    </button>
-
-    <button
-      id="adminBtn"
-      data-page="admin"
-      class="hidden"
-    >
-      👑 Administration
-    </button>
-
+    <button data-page="home">🏠 Accueil</button>
+    <button data-page="data">📊 Mes données</button>
+    <button data-page="history">📜 Mon historique</button>
+    <button data-page="chat">💬 Chat</button>
+    <button data-page="profile">👤 Mon profil</button>
+    <button id="adminBtn" data-page="admin" class="hidden">👑 Administration</button>
   </div>
 
-
-  <!-- ACCUEIL -->
   <div id="home" class="card page">
-
     <h2>Bienvenue sur INSCcompte</h2>
-
     <p id="welcome"></p>
-
     <div class="grid">
-
-      <div class="kpi">
-        <span>Utilisateur</span>
-        <strong id="userName">—</strong>
-      </div>
-
-      <div class="kpi">
-        <span>Rôle</span>
-        <strong id="userRole">—</strong>
-      </div>
-
-      <div class="kpi">
-        <span>Statut</span>
-        <strong>Connecté</strong>
-      </div>
-
+      <div class="kpi"><span>Utilisateur</span><strong id="userName">—</strong></div>
+      <div class="kpi"><span>Rôle</span><strong id="userRole">—</strong></div>
+      <div class="kpi"><span>Statut</span><strong>Connecté</strong></div>
     </div>
-
-    <div class="notice">
-      Ton espace est prêt. Les prochaines étapes ajouteront
-      les comptes, les journées, les entrées/sorties,
-      l'historique et le chat.
-    </div>
-
+    <div class="notice">Ton espace est prêt. Les comptes, journées, entrées/sorties, historique et chat seront ajoutés ensuite.</div>
   </div>
 
-
-  <!-- MES DONNÉES -->
   <div id="data" class="card page hidden">
-
     <h2>📊 Mes données</h2>
-
-    <p class="muted">
-      Cette partie sera construite ensuite.
-    </p>
-
+    <p class="muted">Cette partie sera construite ensuite.</p>
   </div>
 
-
-  <!-- HISTORIQUE -->
   <div id="history" class="card page hidden">
-
     <h2>📜 Mon historique</h2>
-
-    <p class="muted">
-      Cette partie sera construite ensuite.
-    </p>
-
+    <p class="muted">Cette partie sera construite ensuite.</p>
   </div>
 
-
-  <!-- CHAT -->
   <div id="chat" class="card page hidden">
-
     <h2>💬 Chat</h2>
-
-    <p class="muted">
-      Le chat sera ajouté ensuite.
-    </p>
-
+    <p class="muted">Le chat sera ajouté ensuite.</p>
   </div>
 
-
-  <!-- PROFIL -->
   <div id="profile" class="card page hidden">
-
     <h2>👤 Mon profil</h2>
-
     <form id="profileForm" class="form">
-
-      <input
-        id="profileUsername"
-        type="text"
-        placeholder="Nom / pseudo"
-        required
-      >
-
-      <button>
-        Enregistrer mon nom
-      </button>
-
+      <input id="profileUsername" type="text" placeholder="Nom / pseudo" required>
+      <button type="submit">Enregistrer mon nom</button>
     </form>
-
     <div id="profileMsg"></div>
-
   </div>
 
-
-  <!-- ADMINISTRATION -->
-<section id="admin" class="card page hidden">
-    <div class="card">
-        <h2>👑 Administration</h2>
-        <p>Gestion des employés</p>
-
-        <div id="admin-message"></div>
-
-        <div class="admin-table-container">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>👤 Utilisateur</th>
-                        <th>📧 Email</th>
-                        <th>🔐 Rôle</th>
-                        <th>📅 Créé le</th>
-                    </tr>
-                </thead>
-
-                <tbody id="employees-list">
-                    <tr>
-                        <td colspan="4">
-                            Chargement des employés...
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+  <section id="admin" class="card page hidden">
+    <h2>👑 Administration</h2>
+    <p>Gestion des employés</p>
+    <div id="admin-message"></div>
+    <button id="refreshEmployees" class="secondary" style="max-width:220px;margin:10px 0 15px">🔄 Actualiser</button>
+    <div id="employeesLoading" class="empty hidden">Chargement des employés...</div>
+    <div id="employeesEmpty" class="empty hidden">Aucun employé trouvé.</div>
+    <div id="employeesError" class="error"></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>👤 Utilisateur</th>
+            <th>📧 Email</th>
+            <th>🔐 Rôle</th>
+            <th>📅 Créé le</th>
+          </tr>
+        </thead>
+        <tbody id="employeesList"></tbody>
+      </table>
     </div>
+  </section>
 </section>
-
 </main>
 
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
+const SUPABASE_URL = "https://pszbqpxzkblkbmftknzy.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_YNq8pWr5fu2xoiJNR5ha9A__6pqRwdv";
 
-const SUPABASE_URL =
-"https://pszbqpxzkblkbmftknzy.supabase.co";
-
-const SUPABASE_ANON_KEY =
-"sb_publishable_YNq8pWr5fu2xoiJNR5ha9A__6pqRwdv";
-
-
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      storage: window.localStorage
+    }
+  }
+);
 
 const $ = id => document.getElementById(id);
-
 let currentProfile = null;
-
-
-/* MESSAGE */
+let starting = false;
 
 function msg(el,text,error=false){
-
   $(el).textContent = text;
-
-  $(el).className =
-    error ? "error" : "notice";
-
+  $(el).className = error ? "error" : "notice";
 }
-
-
-/* AFFICHER UNE PAGE */
-
-function showPage(id){
-
-  document
-    .querySelectorAll(".page")
-    .forEach(x => x.classList.add("hidden"));
-
-  $(id).classList.remove("hidden");
-
-  if(
-    id === "admin" &&
-    currentProfile &&
-    currentProfile.role === "admin"
-  ){
-    loadEmployees();
-  }
-
-}
-
-
-/* PROFIL */
-
-async function loadProfile(user){
-
-  const {data,error} =
-    await supabaseClient
-      .from("profiles")
-      .select("*")
-      .eq("id",user.id)
-      .single();
-
-  if(error){
-
-    console.error(error);
-
-    return;
-  }
-
-  currentProfile = data;
-
-  $("userName").textContent =
-    data.username || "—";
-
-  $("userRole").textContent =
-    data.role === "admin"
-      ? "👑 Administrateur"
-      : "👤 Employé";
-
-  $("welcome").textContent =
-    "Bonjour " + (data.username || "") + " !";
-
-  $("profileUsername").value =
-    data.username || "";
-
-  $("adminBtn").classList.toggle(
-    "hidden",
-    data.role !== "admin"
-  );
-
-}
-
-
-/* ENTRER DANS L'APPLICATION */
-
-async function enterApp(session){
-
-  $("auth").classList.add("hidden");
-
-  $("app").classList.remove("hidden");
-
-  $("logout").classList.remove("hidden");
-
-  await loadProfile(session.user);
-
-  showPage("home");
-
-}
-
-
-/* SESSION */
-
-async function checkSession(){
-
-  const { data, error } =
-    await supabaseClient.auth.getSession();
-
-  console.log("Session au démarrage :", data.session);
-
-  if(error){
-    console.error("Erreur session :", error);
-    return;
-  }
-
-  if(data.session){
-    await enterApp(data.session);
-  }
-
-}
-
-
-/* ONGLETS CONNEXION */
-
-$("loginTab").onclick = () => {
-
-  $("loginForm").classList.remove("hidden");
-
-  $("registerForm").classList.add("hidden");
-
-  $("authMsg").textContent = "";
-
-};
-
-
-/* ONGLETS INSCRIPTION */
-
-$("registerTab").onclick = () => {
-
-  $("loginForm").classList.add("hidden");
-
-  $("registerForm").classList.remove("hidden");
-
-  $("authMsg").textContent = "";
-
-};
-
-
-/* CONNEXION */
-
-$("loginForm").onsubmit = async e => {
-
-  e.preventDefault();
-
-  const {data,error} =
-    await supabaseClient.auth.signInWithPassword({
-
-      email:
-        $("loginEmail").value.trim(),
-
-      password:
-        $("loginPassword").value
-
-    });
-
-  if(error){
-
-    msg(
-      "authMsg",
-      error.message,
-      true
-    );
-
-    return;
-  }
-
-  await enterApp(data.session);
-
-};
-
-
-/* INSCRIPTION */
-
-$("registerForm").onsubmit = async e => {
-
-  e.preventDefault();
-
-  const {data,error} =
-    await supabaseClient.auth.signUp({
-
-      email:
-        $("regEmail").value.trim(),
-
-      password:
-        $("regPassword").value,
-
-      options:{
-        data:{
-          username:
-            $("regUsername").value.trim()
-        }
-      }
-
-    });
-
-  if(error){
-
-    msg(
-      "authMsg",
-      error.message,
-      true
-    );
-
-    return;
-  }
-
-  if(data.session){
-
-    await enterApp(data.session);
-
-  }else{
-
-    msg(
-      "authMsg",
-      "Compte créé. Si Supabase demande une confirmation e-mail, confirme ton adresse puis connecte-toi."
-    );
-
-  }
-
-};
-
-
-/* MODIFICATION DU NOM */
-
-$("profileForm").onsubmit = async e => {
-
-  e.preventDefault();
-
-  if(!currentProfile) return;
-
-  const username =
-    $("profileUsername")
-      .value
-      .trim();
-
-  const {data,error} =
-    await supabaseClient
-      .from("profiles")
-      .update({username})
-      .eq("id",currentProfile.id)
-      .select()
-      .single();
-
-  if(error){
-
-    msg(
-      "profileMsg",
-      error.message,
-      true
-    );
-
-    return;
-  }
-
-  currentProfile = data;
-
-  $("userName").textContent =
-    username;
-
-  $("welcome").textContent =
-    "Bonjour " + username + " !";
-
-  msg(
-    "profileMsg",
-    "Nom enregistré."
-  );
-
-};
-
-
-/* CHARGER LES EMPLOYÉS */
-
-async function loadEmployees(){
-
-  if(
-    !currentProfile ||
-    currentProfile.role !== "admin"
-  ){
-
-    return;
-  }
-
-  $("employeesLoading")
-    .classList.remove("hidden");
-
-  $("employeesList")
-    .innerHTML = "";
-
-  $("employeesEmpty")
-    .classList.add("hidden");
-
-  $("employeesError")
-    .textContent = "";
-
-  const {data,error} =
-    await supabaseClient
-      .from("profiles")
-      .select("id,username,role")
-      .order("username");
-
-  $("employeesLoading")
-    .classList.add("hidden");
-
-  if(error){
-
-    $("employeesError").textContent =
-      "Impossible de charger les employés : "
-      + error.message;
-
-    return;
-  }
-
-  if(!data || data.length === 0){
-
-    $("employeesEmpty")
-      .classList.remove("hidden");
-
-    return;
-  }
-
-  data.forEach(employee => {
-
-    const div =
-      document.createElement("div");
-
-    div.className =
-      "employee-card";
-
-    const role =
-      employee.role === "admin"
-        ? "👑 Administrateur"
-        : "👤 Employé";
-
-    div.innerHTML = `
-      <div class="employee-name">
-        ${escapeHtml(employee.username || "Sans nom")}
-      </div>
-
-      <div class="employee-role">
-        <span class="badge">
-          ${role}
-        </span>
-      </div>
-    `;
-
-    $("employeesList")
-      .appendChild(div);
-
-  });
-
-}
-
-
-/* PROTECTION AFFICHAGE */
 
 function escapeHtml(value){
-
-  return String(value)
+  return String(value ?? "")
     .replaceAll("&","&amp;")
     .replaceAll("<","&lt;")
     .replaceAll(">","&gt;")
     .replaceAll('"',"&quot;")
     .replaceAll("'","&#039;");
-
 }
 
+function showPage(id){
+  document.querySelectorAll(".page").forEach(x => x.classList.add("hidden"));
+  const page = $(id);
+  if(!page) return;
+  page.classList.remove("hidden");
+  if(id === "admin" && currentProfile?.role === "admin"){
+    loadEmployees();
+  }
+}
 
-/* ACTUALISER LES EMPLOYÉS */
+async function loadProfile(user){
+  const {data,error} = await supabaseClient
+    .from("profiles")
+    .select("*")
+    .eq("id",user.id)
+    .single();
 
-$("refreshEmployees").onclick =
-  loadEmployees;
+  if(error){
+    console.error("Erreur profil:",error);
+    currentProfile = null;
+    $("userName").textContent = user.email || "Utilisateur";
+    $("userRole").textContent = "—";
+    $("welcome").textContent = "Bonjour !";
+    $("adminBtn").classList.add("hidden");
+    return false;
+  }
 
+  currentProfile = data;
+  $("userName").textContent = data.username || user.email || "—";
+  $("userRole").textContent = data.role === "admin" ? "👑 Administrateur" : "👤 Employé";
+  $("welcome").textContent = "Bonjour " + (data.username || "") + " !";
+  $("profileUsername").value = data.username || "";
+  $("adminBtn").classList.toggle("hidden", data.role !== "admin");
+  return true;
+}
 
-/* DÉCONNEXION */
+async function enterApp(session){
+  if(!session) return;
+  $("auth").classList.add("hidden");
+  $("app").classList.remove("hidden");
+  $("logout").classList.remove("hidden");
+  await loadProfile(session.user);
+  showPage("home");
+}
 
-$("logout").onclick = async () => {
+async function checkSession(){
+  const {data,error} = await supabaseClient.auth.getSession();
+  if(error){
+    console.error("Erreur récupération session:",error);
+    return;
+  }
+  if(data.session){
+    await enterApp(data.session);
+  }
+}
 
-  await supabaseClient.auth.signOut();
-
-  location.reload();
-
+$("loginTab").onclick = () => {
+  $("loginForm").classList.remove("hidden");
+  $("registerForm").classList.add("hidden");
+  $("authMsg").textContent = "";
 };
 
+$("registerTab").onclick = () => {
+  $("loginForm").classList.add("hidden");
+  $("registerForm").classList.remove("hidden");
+  $("authMsg").textContent = "";
+};
 
-/* NAVIGATION */
+$("loginForm").onsubmit = async e => {
+  e.preventDefault();
+  msg("authMsg","Connexion...");
+  const {data,error} = await supabaseClient.auth.signInWithPassword({
+    email: $("loginEmail").value.trim(),
+    password: $("loginPassword").value
+  });
+  if(error){
+    msg("authMsg",error.message,true);
+    return;
+  }
+  await enterApp(data.session);
+};
 
-document
-  .querySelectorAll("[data-page]")
-  .forEach(btn => {
+$("registerForm").onsubmit = async e => {
+  e.preventDefault();
+  msg("authMsg","Création du compte...");
+  const username = $("regUsername").value.trim();
+  const email = $("regEmail").value.trim();
+  const password = $("regPassword").value;
 
-    btn.onclick = () => {
-
-      if(
-        btn.dataset.page === "admin" &&
-        (!currentProfile ||
-         currentProfile.role !== "admin")
-      ){
-
-        return;
-      }
-
-      showPage(
-        btn.dataset.page
-      );
-
-    };
-
+  const {data,error} = await supabaseClient.auth.signUp({
+    email,
+    password,
+    options:{data:{username}}
   });
 
-
-/* SURVEILLER LA SESSION */
-
-supabaseClient.auth.onAuthStateChange(
-  (_event,session) => {
-
-    if(session){
-
-      enterApp(session);
-
-    }
-
+  if(error){
+    msg("authMsg",error.message,true);
+    return;
   }
-);
 
+  if(data.session){
+    await enterApp(data.session);
+  }else{
+    msg("authMsg","Compte créé. Confirme ton e-mail si Supabase le demande, puis connecte-toi.");
+  }
+};
 
-/* DÉMARRAGE */
+$("profileForm").onsubmit = async e => {
+  e.preventDefault();
+  if(!currentProfile) return;
 
-checkSession();
+  const username = $("profileUsername").value.trim();
+  if(!username) return;
 
+  const {data,error} = await supabaseClient
+    .from("profiles")
+    .update({username})
+    .eq("id",currentProfile.id)
+    .select()
+    .single();
+
+  if(error){
+    msg("profileMsg",error.message,true);
+    return;
+  }
+
+  currentProfile = data;
+  $("userName").textContent = username;
+  $("welcome").textContent = "Bonjour " + username + " !";
+  msg("profileMsg","Nom enregistré.");
+};
+
+async function loadEmployees(){
+  if(!currentProfile || currentProfile.role !== "admin") return;
+
+  $("employeesLoading").classList.remove("hidden");
+  $("employeesEmpty").classList.add("hidden");
+  $("employeesError").textContent = "";
+  $("employeesList").innerHTML = "";
+
+  const {data,error} = await supabaseClient
+    .from("profiles")
+    .select("id,username,role,created_at")
+    .order("created_at",{ascending:false});
+
+  $("employeesLoading").classList.add("hidden");
+
+  if(error){
+    console.error("Erreur employés:",error);
+    $("employeesError").textContent = "Impossible de charger les employés : " + error.message;
+    return;
+  }
+
+  if(!data || data.length === 0){
+    $("employeesEmpty").classList.remove("hidden");
+    return;
+  }
+
+  $("employeesList").innerHTML = data.map(employee => {
+    const role = employee.role === "admin" ? "👑 Administrateur" : "👤 Employé";
+    const date = employee.created_at
+      ? new Date(employee.created_at).toLocaleDateString("fr-FR")
+      : "—";
+
+    return `
+      <tr>
+        <td><strong>${escapeHtml(employee.username || "Sans nom")}</strong></td>
+        <td>Non disponible dans la table profiles</td>
+        <td>${role}</td>
+        <td>${date}</td>
+      </tr>
+    `;
+  }).join("");
+}
+
+$("refreshEmployees").onclick = loadEmployees;
+
+$("logout").onclick = async () => {
+  await supabaseClient.auth.signOut();
+  currentProfile = null;
+  $("app").classList.add("hidden");
+  $("logout").classList.add("hidden");
+  $("auth").classList.remove("hidden");
+  showPage("home");
+  $("loginForm").reset();
+};
+
+document.querySelectorAll("[data-page]").forEach(btn => {
+  btn.onclick = () => {
+    const page = btn.dataset.page;
+    if(page === "admin" && currentProfile?.role !== "admin") return;
+    showPage(page);
+  };
+});
+
+supabaseClient.auth.onAuthStateChange(async (_event,session) => {
+  if(session && !starting){
+    await enterApp(session);
+  }
+});
+
+(async () => {
+  starting = true;
+  await checkSession();
+  starting = false;
+})();
 </script>
-
 </body>
 </html>
