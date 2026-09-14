@@ -6,76 +6,77 @@
 <title>INSCcompte</title>
 
 <style>
+:root{
+  --bg:#f4f7f9;
+  --card:#fff;
+  --ink:#18212b;
+  --muted:#66727f;
+  --line:#dfe5ea;
+  --accent:#087f8c;
+  --accent2:#075f69;
+  --danger:#b42318;
+}
+
 *{box-sizing:border-box}
 
 body{
   margin:0;
+  background:var(--bg);
   font-family:Arial,Helvetica,sans-serif;
-  background:#f4f7f9;
-  color:#18212b;
+  color:var(--ink);
 }
 
 header{
   background:linear-gradient(135deg,#087f8c,#075f69);
   color:white;
-  padding:22px 20px;
+  padding:22px 18px;
 }
 
-.header-inner{
+.wrap{
   max-width:1100px;
   margin:auto;
+}
+
+header .top{
   display:flex;
   justify-content:space-between;
   align-items:center;
   gap:15px;
 }
 
-.logo{
-  font-size:24px;
-  font-weight:bold;
-}
-
-.user-info{
-  font-size:14px;
-  text-align:right;
+h1{
+  margin:0;
+  font-size:28px;
 }
 
 main{
   max-width:1100px;
-  margin:30px auto;
+  margin:25px auto;
   padding:0 16px;
 }
 
 .card{
   background:white;
-  border:1px solid #dfe5ea;
-  border-radius:16px;
-  padding:24px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px;
   margin-bottom:20px;
-  box-shadow:0 5px 18px rgba(16,42,67,.08);
+  box-shadow:0 4px 14px #102a430d;
 }
 
-.auth{
-  max-width:480px;
-  margin:50px auto;
+h2{
+  margin:0 0 16px;
 }
 
-h1,h2,h3{
-  margin-top:0;
+.muted{
+  color:var(--muted);
 }
 
-.subtitle{
-  color:#66727f;
+.hidden{
+  display:none!important;
 }
 
-label{
-  display:block;
-  margin:14px 0 6px;
-  font-weight:bold;
-  font-size:14px;
-}
-
-input{
+input,button,select{
   width:100%;
   height:44px;
   border:1px solid #cbd5dc;
@@ -85,123 +86,160 @@ input{
 }
 
 button{
+  background:var(--accent);
   border:0;
-  border-radius:9px;
-  padding:12px 18px;
-  font-size:15px;
-  font-weight:bold;
-  cursor:pointer;
-  background:#087f8c;
   color:white;
+  font-weight:700;
+  cursor:pointer;
 }
 
 button:hover{
-  background:#075f69;
+  background:var(--accent2);
 }
 
-button.secondary{
-  background:#edf2f4;
-  color:#26343d;
+.secondary{
+  background:#eef3f5;
+  color:#23313b;
 }
 
-button.danger{
-  background:#b42318;
+.danger{
+  background:#fff0ef;
+  color:var(--danger);
+  border:1px solid #f2c4c0;
 }
 
-.actions{
+.form{
+  display:grid;
+  gap:12px;
+  max-width:430px;
+}
+
+.tabs{
   display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:18px;
+  gap:8px;
+  margin-bottom:18px;
 }
 
-.message{
-  margin-top:15px;
+.tabs button{
+  width:auto;
+  padding:0 18px;
+}
+
+.nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:20px;
+}
+
+.nav button{
+  width:auto;
+  padding:0 15px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.kpi{
+  padding:18px;
+  background:#f7fafb;
+  border:1px solid var(--line);
+  border-radius:12px;
+}
+
+.kpi span{
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.kpi strong{
+  font-size:22px;
+  display:block;
+  margin-top:6px;
+}
+
+.notice{
   padding:12px;
   border-radius:9px;
-  display:none;
+  background:#edf5f6;
+  margin-top:12px;
 }
 
-.message.error{
-  display:block;
-  background:#fff0ef;
-  color:#a32118;
+.error{
+  color:var(--danger);
+  margin-top:10px;
 }
 
-.message.success{
-  display:block;
-  background:#eaf7ef;
-  color:#176b3a;
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:650px;
+}
+
+th,td{
+  padding:12px 10px;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+}
+
+th{
+  background:#f7fafb;
 }
 
 .badge{
   display:inline-block;
-  padding:6px 10px;
-  border-radius:20px;
+  padding:5px 9px;
+  border-radius:99px;
   background:#e8f5f6;
   color:#075f69;
-  font-weight:bold;
-  font-size:13px;
+  font-size:12px;
+  font-weight:700;
 }
 
-.hidden{
-  display:none !important;
+.empty{
+  padding:25px;
+  text-align:center;
+  color:var(--muted);
 }
 
-.menu{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:20px;
-}
-
-.menu button{
-  background:white;
-  color:#075f69;
-  border:1px solid #d5e0e4;
-}
-
-.menu button.active{
-  background:#087f8c;
-  color:white;
-}
-
-.dashboard-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-
-.dashboard-box{
-  padding:20px;
-  border:1px solid #dfe5ea;
+.employee-card{
+  border:1px solid var(--line);
   border-radius:12px;
+  padding:16px;
+  margin-bottom:12px;
   background:#fafcfd;
 }
 
-.dashboard-box strong{
-  display:block;
-  font-size:25px;
-  margin-top:8px;
+.employee-name{
+  font-size:19px;
+  font-weight:700;
 }
 
-.small{
-  font-size:13px;
-  color:#66727f;
+.employee-email{
+  color:var(--muted);
+  margin-top:5px;
+}
+
+.employee-role{
+  margin-top:10px;
 }
 
 @media(max-width:700px){
-  .header-inner{
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  header .top{
     align-items:flex-start;
     flex-direction:column;
-  }
-
-  .user-info{
-    text-align:left;
-  }
-
-  .dashboard-grid{
-    grid-template-columns:1fr;
   }
 }
 </style>
@@ -209,204 +247,266 @@ button.danger{
 
 <body>
 
-<header id="siteHeader" class="hidden">
-  <div class="header-inner">
-    <div class="logo">INSCcompte</div>
-
-    <div class="user-info">
-      <div id="headerUsername">Utilisateur</div>
-      <div id="headerRole"></div>
+<header>
+  <div class="wrap top">
+    <div>
+      <h1>INSCcompte</h1>
+      <div>Gestion des employés, comptes et journées</div>
     </div>
+
+    <button id="logout" class="secondary hidden">
+      Déconnexion
+    </button>
   </div>
 </header>
 
-
 <main>
 
-  <!-- CONNEXION -->
-  <section id="loginPage" class="card auth">
+<!-- CONNEXION -->
+<section id="auth" class="card">
 
-    <h1>Connexion</h1>
+  <h2>Bienvenue</h2>
 
-    <p class="subtitle">
-      Connectez-vous à votre compte INSCcompte.
-    </p>
+  <p class="muted">
+    Connecte-toi ou crée ton compte pour accéder au site.
+  </p>
 
-    <label for="loginEmail">Email</label>
+  <div class="tabs">
+    <button id="loginTab">
+      Connexion
+    </button>
+
+    <button id="registerTab" class="secondary">
+      Créer un compte
+    </button>
+  </div>
+
+  <form id="loginForm" class="form">
+
     <input
       id="loginEmail"
       type="email"
-      placeholder="votre@email.com"
+      placeholder="Adresse e-mail"
+      required
     >
 
-    <label for="loginPassword">Mot de passe</label>
     <input
       id="loginPassword"
       type="password"
-      placeholder="Votre mot de passe"
+      placeholder="Mot de passe"
+      required
     >
 
-    <div class="actions">
-      <button id="loginButton">
-        Se connecter
-      </button>
+    <button>
+      Se connecter
+    </button>
 
-      <button id="showRegisterButton" class="secondary">
-        Créer un compte
-      </button>
+  </form>
+
+  <form id="registerForm" class="form hidden">
+
+    <input
+      id="regUsername"
+      type="text"
+      placeholder="Nom / pseudo"
+      required
+    >
+
+    <input
+      id="regEmail"
+      type="email"
+      placeholder="Adresse e-mail"
+      required
+    >
+
+    <input
+      id="regPassword"
+      type="password"
+      placeholder="Mot de passe (6 caractères minimum)"
+      minlength="6"
+      required
+    >
+
+    <button>
+      Créer mon compte
+    </button>
+
+  </form>
+
+  <div id="authMsg"></div>
+
+</section>
+
+
+<!-- APPLICATION -->
+<section id="app" class="hidden">
+
+  <div class="nav">
+
+    <button data-page="home">
+      🏠 Accueil
+    </button>
+
+    <button data-page="data">
+      📊 Mes données
+    </button>
+
+    <button data-page="history">
+      📜 Mon historique
+    </button>
+
+    <button data-page="chat">
+      💬 Chat
+    </button>
+
+    <button data-page="profile">
+      👤 Mon profil
+    </button>
+
+    <button
+      id="adminBtn"
+      data-page="admin"
+      class="hidden"
+    >
+      👑 Administration
+    </button>
+
+  </div>
+
+
+  <!-- ACCUEIL -->
+  <div id="home" class="card page">
+
+    <h2>Bienvenue sur INSCcompte</h2>
+
+    <p id="welcome"></p>
+
+    <div class="grid">
+
+      <div class="kpi">
+        <span>Utilisateur</span>
+        <strong id="userName">—</strong>
+      </div>
+
+      <div class="kpi">
+        <span>Rôle</span>
+        <strong id="userRole">—</strong>
+      </div>
+
+      <div class="kpi">
+        <span>Statut</span>
+        <strong>Connecté</strong>
+      </div>
+
     </div>
 
-    <div id="loginMessage" class="message"></div>
+    <div class="notice">
+      Ton espace est prêt. Les prochaines étapes ajouteront
+      les comptes, les journées, les entrées/sorties,
+      l'historique et le chat.
+    </div>
 
-  </section>
+  </div>
 
 
-  <!-- INSCRIPTION -->
-  <section id="registerPage" class="card auth hidden">
+  <!-- MES DONNÉES -->
+  <div id="data" class="card page hidden">
 
-    <h1>Créer un compte</h1>
+    <h2>📊 Mes données</h2>
 
-    <p class="subtitle">
-      Créez votre compte personnel.
+    <p class="muted">
+      Cette partie sera construite ensuite.
     </p>
 
-    <label for="registerUsername">Nom / prénom</label>
-    <input
-      id="registerUsername"
-      type="text"
-      placeholder="Votre nom"
-    >
-
-    <label for="registerEmail">Email</label>
-    <input
-      id="registerEmail"
-      type="email"
-      placeholder="votre@email.com"
-    >
-
-    <label for="registerPassword">Mot de passe</label>
-    <input
-      id="registerPassword"
-      type="password"
-      placeholder="Minimum 6 caractères"
-    >
-
-    <div class="actions">
-
-      <button id="registerButton">
-        Créer mon compte
-      </button>
-
-      <button id="showLoginButton" class="secondary">
-        Retour à la connexion
-      </button>
-
-    </div>
-
-    <div id="registerMessage" class="message"></div>
-
-  </section>
+  </div>
 
 
-  <!-- SITE PRINCIPAL -->
-  <section id="appPage" class="hidden">
+  <!-- HISTORIQUE -->
+  <div id="history" class="card page hidden">
 
-    <div class="menu">
+    <h2>📜 Mon historique</h2>
 
-      <button id="homeButton" class="active">
-        🏠 Accueil
-      </button>
+    <p class="muted">
+      Cette partie sera construite ensuite.
+    </p>
 
-      <button id="profileButton">
-        👤 Mon profil
-      </button>
-
-      <button id="logoutButton" class="danger">
-        🚪 Déconnexion
-      </button>
-
-    </div>
+  </div>
 
 
-    <!-- ACCUEIL -->
-    <section id="homeSection" class="card">
+  <!-- CHAT -->
+  <div id="chat" class="card page hidden">
 
-      <h1>Bienvenue sur INSCcompte</h1>
+    <h2>💬 Chat</h2>
 
-      <p class="subtitle">
-        Votre espace personnel de gestion.
-      </p>
+    <p class="muted">
+      Le chat sera ajouté ensuite.
+    </p>
 
-      <div class="dashboard-grid">
-
-        <div class="dashboard-box">
-          <div class="small">Utilisateur</div>
-          <strong id="dashboardUsername">-</strong>
-        </div>
-
-        <div class="dashboard-box">
-          <div class="small">Rôle</div>
-          <strong id="dashboardRole">-</strong>
-        </div>
-
-        <div class="dashboard-box">
-          <div class="small">Statut</div>
-          <strong>Connecté</strong>
-        </div>
-
-      </div>
-
-      <div id="adminMessage" class="card hidden" style="margin-top:20px;background:#fffaf0">
-        <h3>👑 Espace administrateur</h3>
-        <p>
-          Les prochaines étapes permettront à l'administrateur
-          de gérer les employés, les comptes, les données journalières
-          et l'historique.
-        </p>
-      </div>
-
-      <div id="employeeMessage" class="card hidden" style="margin-top:20px;background:#f5fbfc">
-        <h3>👤 Espace employé</h3>
-        <p>
-          Les prochaines étapes permettront à l'employé
-          de consulter ses propres données et son historique.
-        </p>
-      </div>
-
-    </section>
+  </div>
 
 
-    <!-- PROFIL -->
-    <section id="profileSection" class="card hidden">
+  <!-- PROFIL -->
+  <div id="profile" class="card page hidden">
 
-      <h1>Mon profil</h1>
+    <h2>👤 Mon profil</h2>
 
-      <p class="subtitle">
-        Vous pourrez modifier votre nom d'utilisateur ici.
-      </p>
-
-      <label for="profileUsername">
-        Nom / prénom
-      </label>
+    <form id="profileForm" class="form">
 
       <input
         id="profileUsername"
         type="text"
+        placeholder="Nom / pseudo"
+        required
       >
 
-      <div class="actions">
+      <button>
+        Enregistrer mon nom
+      </button>
 
-        <button id="saveProfileButton">
-          Enregistrer
-        </button>
+    </form>
 
-      </div>
+    <div id="profileMsg"></div>
 
-      <div id="profileMessage" class="message"></div>
+  </div>
 
-    </section>
 
-  </section>
+  <!-- ADMINISTRATION -->
+  <div id="admin" class="card page hidden">
+
+    <h2>👑 Administration</h2>
+
+    <p class="muted">
+      Gestion des employés.
+    </p>
+
+    <div class="notice">
+      Ici, l'administrateur peut voir les utilisateurs
+      enregistrés dans INSCcompte.
+    </div>
+
+    <br>
+
+    <button id="refreshEmployees">
+      🔄 Actualiser la liste
+    </button>
+
+    <br><br>
+
+    <div id="employeesLoading" class="muted hidden">
+      Chargement des employés...
+    </div>
+
+    <div id="employeesList"></div>
+
+    <div id="employeesEmpty" class="empty hidden">
+      Aucun employé trouvé.
+    </div>
+
+    <div id="employeesError" class="error"></div>
+
+  </div>
+
+</section>
 
 </main>
 
@@ -416,390 +516,115 @@ button.danger{
 <script>
 
 const SUPABASE_URL =
-  "https://pszbqpxzkblkbmftknzy.supabase.co";
+"https://pszbqpxzkblkbmftknzy.supabase.co";
 
 const SUPABASE_ANON_KEY =
-  "sb_publishable_YNq8pWr5fu2xoiJNR5ha9A__6pqRwdv";
+"sb_publishable_YNq8pWr5fu2xoiJNR5ha9A__6pqRwdv";
 
 const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
 
+const $ = id => document.getElementById(id);
 
-let currentUser = null;
 let currentProfile = null;
 
 
-const $ = id =>
-  document.getElementById(id);
+/* MESSAGE */
 
+function msg(el,text,error=false){
 
-function showMessage(element,message,type){
+  $(el).textContent = text;
 
-  element.textContent = message;
-
-  element.className =
-    "message " + type;
-}
-
-
-function hideMessage(element){
-
-  element.textContent = "";
-
-  element.className =
-    "message";
-}
-
-
-function showLogin(){
-
-  $("loginPage").classList.remove("hidden");
-  $("registerPage").classList.add("hidden");
-  $("appPage").classList.add("hidden");
-  $("siteHeader").classList.add("hidden");
+  $(el).className =
+    error ? "error" : "notice";
 
 }
 
 
-function showRegister(){
+/* AFFICHER UNE PAGE */
 
-  $("loginPage").classList.add("hidden");
-  $("registerPage").classList.remove("hidden");
-  $("appPage").classList.add("hidden");
-  $("siteHeader").classList.add("hidden");
+function showPage(id){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(x => x.classList.add("hidden"));
+
+  $(id).classList.remove("hidden");
+
+  if(
+    id === "admin" &&
+    currentProfile &&
+    currentProfile.role === "admin"
+  ){
+    loadEmployees();
+  }
 
 }
 
 
-function showApp(){
+/* PROFIL */
 
-  $("loginPage").classList.add("hidden");
-  $("registerPage").classList.add("hidden");
-  $("appPage").classList.remove("hidden");
-  $("siteHeader").classList.remove("hidden");
-
-}
-
-
-async function loadProfile(){
-
-  if(!currentUser) return;
+async function loadProfile(user){
 
   const {data,error} =
     await supabaseClient
       .from("profiles")
-      .select("id,username,role")
-      .eq("id",currentUser.id)
+      .select("*")
+      .eq("id",user.id)
       .single();
 
   if(error){
 
     console.error(error);
 
-    alert(
-      "Impossible de charger votre profil : "
-      + error.message
-    );
-
     return;
-
   }
 
   currentProfile = data;
 
-  $("headerUsername").textContent =
-    data.username || "Utilisateur";
+  $("userName").textContent =
+    data.username || "—";
 
-  $("headerRole").innerHTML =
+  $("userRole").textContent =
     data.role === "admin"
-      ? '<span class="badge">👑 Administrateur</span>'
-      : '<span class="badge">👤 Employé</span>';
+      ? "👑 Administrateur"
+      : "👤 Employé";
 
-  $("dashboardUsername").textContent =
-    data.username || "-";
-
-  $("dashboardRole").textContent =
-    data.role === "admin"
-      ? "Administrateur"
-      : "Employé";
+  $("welcome").textContent =
+    "Bonjour " + (data.username || "") + " !";
 
   $("profileUsername").value =
     data.username || "";
 
-  if(data.role === "admin"){
-
-    $("adminMessage").classList.remove("hidden");
-    $("employeeMessage").classList.add("hidden");
-
-  }else{
-
-    $("adminMessage").classList.add("hidden");
-    $("employeeMessage").classList.remove("hidden");
-
-  }
+  $("adminBtn").classList.toggle(
+    "hidden",
+    data.role !== "admin"
+  );
 
 }
 
 
-async function startApp(user){
+/* ENTRER DANS L'APPLICATION */
 
-  currentUser = user;
+async function enterApp(session){
 
-  showApp();
+  $("auth").classList.add("hidden");
 
-  await loadProfile();
+  $("app").classList.remove("hidden");
+
+  $("logout").classList.remove("hidden");
+
+  await loadProfile(session.user);
+
+  showPage("home");
 
 }
 
 
-$("showRegisterButton").onclick = () => {
-
-  hideMessage($("loginMessage"));
-
-  showRegister();
-
-};
-
-
-$("showLoginButton").onclick = () => {
-
-  hideMessage($("registerMessage"));
-
-  showLogin();
-
-};
-
-
-$("loginButton").onclick = async () => {
-
-  const email =
-    $("loginEmail").value.trim();
-
-  const password =
-    $("loginPassword").value;
-
-  if(!email || !password){
-
-    showMessage(
-      $("loginMessage"),
-      "Veuillez remplir tous les champs.",
-      "error"
-    );
-
-    return;
-
-  }
-
-  $("loginButton").disabled = true;
-
-  const {data,error} =
-    await supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
-
-  $("loginButton").disabled = false;
-
-  if(error){
-
-    showMessage(
-      $("loginMessage"),
-      "Connexion impossible : " + error.message,
-      "error"
-    );
-
-    return;
-
-  }
-
-  showMessage(
-    $("loginMessage"),
-    "Connexion réussie.",
-    "success"
-  );
-
-  await startApp(data.user);
-
-};
-
-
-$("registerButton").onclick = async () => {
-
-  const username =
-    $("registerUsername").value.trim();
-
-  const email =
-    $("registerEmail").value.trim();
-
-  const password =
-    $("registerPassword").value;
-
-  if(!username || !email || !password){
-
-    showMessage(
-      $("registerMessage"),
-      "Veuillez remplir tous les champs.",
-      "error"
-    );
-
-    return;
-
-  }
-
-  if(password.length < 6){
-
-    showMessage(
-      $("registerMessage"),
-      "Le mot de passe doit contenir au moins 6 caractères.",
-      "error"
-    );
-
-    return;
-
-  }
-
-  $("registerButton").disabled = true;
-
-  const {data,error} =
-    await supabaseClient.auth.signUp({
-
-      email,
-
-      password,
-
-      options:{
-        data:{
-          username:username
-        }
-      }
-
-    });
-
-  $("registerButton").disabled = false;
-
-  if(error){
-
-    showMessage(
-      $("registerMessage"),
-      "Inscription impossible : " + error.message,
-      "error"
-    );
-
-    return;
-
-  }
-
-  if(data.session){
-
-    await startApp(data.user);
-
-  }else{
-
-    showMessage(
-      $("registerMessage"),
-      "Compte créé. Vérifiez votre email puis connectez-vous.",
-      "success"
-    );
-
-  }
-
-};
-
-
-$("logoutButton").onclick = async () => {
-
-  await supabaseClient.auth.signOut();
-
-  currentUser = null;
-  currentProfile = null;
-
-  showLogin();
-
-};
-
-
-$("homeButton").onclick = () => {
-
-  $("homeSection").classList.remove("hidden");
-  $("profileSection").classList.add("hidden");
-
-  $("homeButton").classList.add("active");
-  $("profileButton").classList.remove("active");
-
-};
-
-
-$("profileButton").onclick = () => {
-
-  $("homeSection").classList.add("hidden");
-  $("profileSection").classList.remove("hidden");
-
-  $("homeButton").classList.remove("active");
-  $("profileButton").classList.add("active");
-
-};
-
-
-$("saveProfileButton").onclick = async () => {
-
-  if(!currentUser) return;
-
-  const username =
-    $("profileUsername").value.trim();
-
-  if(!username){
-
-    showMessage(
-      $("profileMessage"),
-      "Le nom ne peut pas être vide.",
-      "error"
-    );
-
-    return;
-
-  }
-
-  const {data,error} =
-    await supabaseClient
-      .from("profiles")
-      .update({
-        username:username
-      })
-      .eq("id",currentUser.id)
-      .select()
-      .single();
-
-  if(error){
-
-    showMessage(
-      $("profileMessage"),
-      "Impossible d'enregistrer : " + error.message,
-      "error"
-    );
-
-    return;
-
-  }
-
-  currentProfile = data;
-
-  $("headerUsername").textContent =
-    data.username;
-
-  $("dashboardUsername").textContent =
-    data.username;
-
-  showMessage(
-    $("profileMessage"),
-    "Profil enregistré avec succès.",
-    "success"
-  );
-
-};
-
+/* SESSION */
 
 async function checkSession(){
 
@@ -808,29 +633,327 @@ async function checkSession(){
 
   if(data.session){
 
-    await startApp(data.session.user);
-
-  }else{
-
-    showLogin();
+    await enterApp(data.session);
 
   }
 
 }
 
 
+/* ONGLETS CONNEXION */
+
+$("loginTab").onclick = () => {
+
+  $("loginForm").classList.remove("hidden");
+
+  $("registerForm").classList.add("hidden");
+
+  $("authMsg").textContent = "";
+
+};
+
+
+/* ONGLETS INSCRIPTION */
+
+$("registerTab").onclick = () => {
+
+  $("loginForm").classList.add("hidden");
+
+  $("registerForm").classList.remove("hidden");
+
+  $("authMsg").textContent = "";
+
+};
+
+
+/* CONNEXION */
+
+$("loginForm").onsubmit = async e => {
+
+  e.preventDefault();
+
+  const {data,error} =
+    await supabaseClient.auth.signInWithPassword({
+
+      email:
+        $("loginEmail").value.trim(),
+
+      password:
+        $("loginPassword").value
+
+    });
+
+  if(error){
+
+    msg(
+      "authMsg",
+      error.message,
+      true
+    );
+
+    return;
+  }
+
+  await enterApp(data.session);
+
+};
+
+
+/* INSCRIPTION */
+
+$("registerForm").onsubmit = async e => {
+
+  e.preventDefault();
+
+  const {data,error} =
+    await supabaseClient.auth.signUp({
+
+      email:
+        $("regEmail").value.trim(),
+
+      password:
+        $("regPassword").value,
+
+      options:{
+        data:{
+          username:
+            $("regUsername").value.trim()
+        }
+      }
+
+    });
+
+  if(error){
+
+    msg(
+      "authMsg",
+      error.message,
+      true
+    );
+
+    return;
+  }
+
+  if(data.session){
+
+    await enterApp(data.session);
+
+  }else{
+
+    msg(
+      "authMsg",
+      "Compte créé. Si Supabase demande une confirmation e-mail, confirme ton adresse puis connecte-toi."
+    );
+
+  }
+
+};
+
+
+/* MODIFICATION DU NOM */
+
+$("profileForm").onsubmit = async e => {
+
+  e.preventDefault();
+
+  if(!currentProfile) return;
+
+  const username =
+    $("profileUsername")
+      .value
+      .trim();
+
+  const {data,error} =
+    await supabaseClient
+      .from("profiles")
+      .update({username})
+      .eq("id",currentProfile.id)
+      .select()
+      .single();
+
+  if(error){
+
+    msg(
+      "profileMsg",
+      error.message,
+      true
+    );
+
+    return;
+  }
+
+  currentProfile = data;
+
+  $("userName").textContent =
+    username;
+
+  $("welcome").textContent =
+    "Bonjour " + username + " !";
+
+  msg(
+    "profileMsg",
+    "Nom enregistré."
+  );
+
+};
+
+
+/* CHARGER LES EMPLOYÉS */
+
+async function loadEmployees(){
+
+  if(
+    !currentProfile ||
+    currentProfile.role !== "admin"
+  ){
+
+    return;
+  }
+
+  $("employeesLoading")
+    .classList.remove("hidden");
+
+  $("employeesList")
+    .innerHTML = "";
+
+  $("employeesEmpty")
+    .classList.add("hidden");
+
+  $("employeesError")
+    .textContent = "";
+
+  const {data,error} =
+    await supabaseClient
+      .from("profiles")
+      .select("id,username,role")
+      .order("username");
+
+  $("employeesLoading")
+    .classList.add("hidden");
+
+  if(error){
+
+    $("employeesError").textContent =
+      "Impossible de charger les employés : "
+      + error.message;
+
+    return;
+  }
+
+  if(!data || data.length === 0){
+
+    $("employeesEmpty")
+      .classList.remove("hidden");
+
+    return;
+  }
+
+  data.forEach(employee => {
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "employee-card";
+
+    const role =
+      employee.role === "admin"
+        ? "👑 Administrateur"
+        : "👤 Employé";
+
+    div.innerHTML = `
+      <div class="employee-name">
+        ${escapeHtml(employee.username || "Sans nom")}
+      </div>
+
+      <div class="employee-role">
+        <span class="badge">
+          ${role}
+        </span>
+      </div>
+    `;
+
+    $("employeesList")
+      .appendChild(div);
+
+  });
+
+}
+
+
+/* PROTECTION AFFICHAGE */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* ACTUALISER LES EMPLOYÉS */
+
+$("refreshEmployees").onclick =
+  loadEmployees;
+
+
+/* DÉCONNEXION */
+
+$("logout").onclick = async () => {
+
+  await supabaseClient.auth.signOut();
+
+  location.reload();
+
+};
+
+
+/* NAVIGATION */
+
+document
+  .querySelectorAll("[data-page]")
+  .forEach(btn => {
+
+    btn.onclick = () => {
+
+      if(
+        btn.dataset.page === "admin" &&
+        (!currentProfile ||
+         currentProfile.role !== "admin")
+      ){
+
+        return;
+      }
+
+      showPage(
+        btn.dataset.page
+      );
+
+    };
+
+  });
+
+
+/* SURVEILLER LA SESSION */
+
 supabaseClient.auth.onAuthStateChange(
-  async (event,session) => {
+  (_event,session) => {
 
-    if(session && !currentUser){
+    if(session){
 
-      await startApp(session.user);
+      enterApp(session);
 
     }
 
   }
 );
 
+
+/* DÉMARRAGE */
 
 checkSession();
 
