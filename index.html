@@ -514,18 +514,7 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
 "sb_publishable_YNq8pWr5fu2xoiJNR5ha9A__6pqRwdv";
 
-const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY,
-  {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      detectSessionInUrl: true
-    }
-  }
-);
+
 
 const $ = id => document.getElementById(id);
 
@@ -628,13 +617,18 @@ async function enterApp(session){
 
 async function checkSession(){
 
-  const {data} =
+  const { data, error } =
     await supabaseClient.auth.getSession();
 
+  console.log("Session au démarrage :", data.session);
+
+  if(error){
+    console.error("Erreur session :", error);
+    return;
+  }
+
   if(data.session){
-
     await enterApp(data.session);
-
   }
 
 }
