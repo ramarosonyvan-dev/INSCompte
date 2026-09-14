@@ -471,45 +471,43 @@ th{
 
 
   <!-- ADMINISTRATION -->
-  <div id="admin" class="card page hidden">
+ <section id="page-admin" class="page">
+    <div class="card">
+        <h2>👑 Administration</h2>
+        <p>Gestion des employés</p>
 
-    <h2>👑 Administration</h2>
+        <div id="admin-message"></div>
 
-    <p class="muted">
-      Gestion des employés.
-    </p>
+        <div class="admin-table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>👤 Utilisateur</th>
+                        <th>📧 Email</th>
+                        <th>🔐 Rôle</th>
+                        <th>📅 Créé le</th>
+                    </tr>
+                </thead>
 
-    <div class="notice">
-      Ici, l'administrateur peut voir les utilisateurs
-      enregistrés dans INSCcompte.
+                <tbody id="employees-list">
+                    <tr>
+                        <td colspan="4">
+                            Chargement des employés...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <br>
-
-    <button id="refreshEmployees">
-      🔄 Actualiser la liste
-    </button>
-
-    <br><br>
-
-    <div id="employeesLoading" class="muted hidden">
-      Chargement des employés...
-    </div>
-
-    <div id="employeesList"></div>
-
-    <div id="employeesEmpty" class="empty hidden">
-      Aucun employé trouvé.
-    </div>
-
-    <div id="employeesError" class="error"></div>
-
-  </div>
-
 </section>
 
 </main>
+<script>
+    const SUPABASE_URL = "...";
+    const SUPABASE_ANON_KEY = "...";
 
+
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -956,6 +954,107 @@ supabaseClient.auth.onAuthStateChange(
 /* DÉMARRAGE */
 
 checkSession();
+
+  async function loadEmployees() {
+    const list = document.getElementById("employees-list");
+    const message = document.getElementById("admin-message");
+
+    if (!list) return;
+
+    list.innerHTML = `
+        <tr>
+            <td colspan="4">Chargement...</td>
+        </tr>
+    `;
+
+    try {
+        const { data, error } = await supabase
+            .from("profiles")
+            .select("id, username, role, created_at")
+            .order("created_at", { ascending: false });
+
+        if (error) {
+            console.error(error);
+
+            list.innerHTML = `
+                <tr>
+                    <td colspan="4">
+                        ❌ Impossible de charger les employés.
+                    </td>
+                </tr>
+            `;
+
+            message.innerHTML = `
+                <div class="error-message">
+                    ${error.message}
+                </div>
+            `;
+
+            return;
+        }
+
+        if (!data || data.length === 0) {
+            list.innerHTML = `
+                <tr>
+                    <td colspan="4">
+                        Aucun employé trouvé.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        list.innerHTML = data.map(employee => {
+            const roleText =
+                employee.role === "admin"
+                    ? "👑 Administrateur"
+                    : "👤 Employé";
+
+            const date = employee.created_at
+                ? new Date(employee.created_at).toLocaleDateString("fr-FR")
+                : "-";
+
+            return `
+                <tr>
+                    <td>
+                        <strong>${escapeHtml(employee.username || "-")}</strong>
+                    </td>
+
+                    <td>
+                        -
+                    </td>
+
+                    <td>
+                        ${roleText}
+                    </td>
+
+                    <td>
+                        ${date}
+                    </td>
+                </tr>
+            `;
+        }).join("");
+
+    } catch (err) {
+        console.error(err);
+
+        list.innerHTML = `
+            <tr>
+                <td colspan="4">
+                    ❌ Une erreur est survenue.
+                </td>
+            </tr>
+        `;
+    }
+}
+
+
+function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+}
 
 </script>
 
