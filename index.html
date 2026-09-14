@@ -1,468 +1,3064 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>INSCcompte</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-:root{
-  --bg:#f4f7f9;--card:#fff;--ink:#18212b;--muted:#66727f;
-  --line:#dfe5ea;--accent:#087f8c;--accent2:#075f69;
-  --danger:#b42318;--ok:#16794b;
+*{
+  box-sizing:border-box;
 }
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
-header{background:linear-gradient(135deg,#087f8c,#075f69);color:#fff;padding:22px 18px}
-.wrap{max-width:1100px;margin:auto}
-header .top{display:flex;justify-content:space-between;align-items:center;gap:15px}
-h1{margin:0;font-size:28px} h2{margin:0 0 16px}
-main{max-width:1100px;margin:25px auto;padding:0 16px}
-.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:20px;box-shadow:0 4px 14px #102a430d}
-.hidden{display:none!important}.muted{color:var(--muted)}
-input,button{height:44px;border:1px solid #cbd5dc;border-radius:9px;padding:0 12px;font-size:15px}
-input{width:100%}
-button{background:var(--accent);border:0;color:#fff;font-weight:700;cursor:pointer}
-button:hover{background:var(--accent2)}
-.secondary{background:#eef3f5;color:#23313b}.danger{background:#fff0ef;color:var(--danger);border:1px solid #f2c4c0}
-.small{height:36px;width:auto;padding:0 12px;font-size:13px}
-.form{display:grid;gap:12px;max-width:520px}
-.tabs,.nav,.actions{display:flex;flex-wrap:wrap;gap:8px}
-.tabs{margin-bottom:18px}.tabs button,.nav button{width:auto;padding:0 16px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.kpi{padding:18px;background:#f7fafb;border:1px solid var(--line);border-radius:12px}
-.kpi span{display:block;color:var(--muted);font-size:13px}.kpi strong{font-size:22px;display:block;margin-top:6px}
-.notice{padding:12px;border-radius:9px;background:#edf5f6;margin-top:12px}
-.error{color:var(--danger);margin-top:10px}.success{color:var(--ok);margin-top:10px}
-.table-wrap{overflow-x:auto} table{width:100%;border-collapse:collapse;min-width:760px}
-th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left} th{background:#f7fafb}
-.badge{display:inline-block;padding:5px 9px;border-radius:99px;background:#e8f5f6;color:#075f69;font-size:12px;font-weight:700}
-.employee-card{border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px;background:#fafcfd}
-.empty{padding:25px;text-align:center;color:var(--muted)}
-.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-.toolbar button{width:auto}
-.modal{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:16px;z-index:10}
-.modal-box{background:#fff;border-radius:14px;padding:22px;width:min(520px,100%)}
-.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
-.close{width:40px;height:40px;padding:0;background:#eef3f5;color:#23313b}
-@media(max-width:700px){.grid{grid-template-columns:1fr}header .top{align-items:flex-start;flex-direction:column}}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f3f4f6;
+  color:#111827;
+}
+
+header{
+  background:#111827;
+  color:white;
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+header h1{
+  margin:0;
+  font-size:22px;
+}
+
+header button{
+  width:auto;
+  margin:0;
+  background:#374151;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background:white;
+  border-radius:14px;
+  padding:20px;
+  margin-bottom:20px;
+  box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.hidden{
+  display:none!important;
+}
+
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:20px;
+}
+
+nav button{
+  width:auto;
+}
+
+button{
+  border:0;
+  border-radius:8px;
+  padding:11px 15px;
+  background:#2563eb;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+button:hover{
+  opacity:.9;
+}
+
+button.danger{
+  background:#dc2626;
+}
+
+button.secondary{
+  background:#6b7280;
+}
+
+button.success{
+  background:#16a34a;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:11px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  margin-top:6px;
+  margin-bottom:12px;
+  font-size:15px;
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+label{
+  font-weight:bold;
+  display:block;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+
+.stat{
+  padding:18px;
+  background:#f9fafb;
+  border-radius:12px;
+  border:1px solid #e5e7eb;
+}
+
+.stat strong{
+  display:block;
+  font-size:28px;
+  margin-top:8px;
+}
+
+.table-wrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,
+td{
+  padding:10px;
+  border-bottom:1px solid #e5e7eb;
+  text-align:left;
+  vertical-align:top;
+}
+
+th{
+  background:#f9fafb;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#e5e7eb;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.badge.admin{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.badge.employee{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.message{
+  padding:10px 12px;
+  margin-bottom:8px;
+  border-radius:10px;
+  background:#f3f4f6;
+}
+
+.message.mine{
+  background:#dbeafe;
+}
+
+.message small{
+  display:block;
+  color:#6b7280;
+  margin-top:4px;
+}
+
+.error{
+  color:#b91c1c;
+  background:#fee2e2;
+  padding:10px;
+  border-radius:8px;
+  margin-bottom:12px;
+}
+
+.success-msg{
+  color:#166534;
+  background:#dcfce7;
+  padding:10px;
+  border-radius:8px;
+  margin-bottom:12px;
+}
+
+.empty{
+  color:#6b7280;
+  padding:20px;
+  text-align:center;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.actions button{
+  margin:0;
+}
+
+hr{
+  border:0;
+  border-top:1px solid #e5e7eb;
+  margin:20px 0;
+}
+
+@media(max-width:600px){
+  header{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .container{
+    padding:12px;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <header>
-  <div class="wrap top">
-    <div>
-      <h1>INSCcompte</h1>
-      <div>Gestion des employés, comptes et journées</div>
-    </div>
-    <button id="logout" class="secondary hidden">Déconnexion</button>
+  <h1>INSCcompte</h1>
+
+  <div>
+    <span id="userInfo"></span>
+    <button id="logoutBtn" class="hidden">Déconnexion</button>
   </div>
 </header>
 
-<main>
-<section id="auth" class="card">
-  <h2>Bienvenue</h2>
-  <p class="muted">Connecte-toi ou crée ton compte pour accéder au site.</p>
-  <div class="tabs">
-    <button id="loginTab">Connexion</button>
-    <button id="registerTab" class="secondary">Créer un compte</button>
+
+<div class="container">
+
+<!-- =====================================================
+     AUTH
+===================================================== -->
+
+<section id="authSection">
+
+  <div class="card">
+
+    <h2>Connexion</h2>
+
+    <div id="authError" class="error hidden"></div>
+
+    <label>Email</label>
+    <input id="loginEmail" type="email">
+
+    <label>Mot de passe</label>
+    <input id="loginPassword" type="password">
+
+    <button id="loginBtn">Se connecter</button>
+
   </div>
 
-  <form id="loginForm" class="form">
-    <input id="loginEmail" type="email" placeholder="Adresse e-mail" required>
-    <input id="loginPassword" type="password" placeholder="Mot de passe" required>
-    <button>Se connecter</button>
-  </form>
 
-  <form id="registerForm" class="form hidden">
-    <input id="regUsername" type="text" placeholder="Nom / pseudo" required>
-    <input id="regEmail" type="email" placeholder="Adresse e-mail" required>
-    <input id="regPassword" type="password" placeholder="Mot de passe (6 caractères minimum)" minlength="6" required>
-    <button>Créer mon compte</button>
-  </form>
-  <div id="authMsg"></div>
+  <div class="card">
+
+    <h2>Créer un compte</h2>
+
+    <label>Nom</label>
+    <input id="registerName" type="text">
+
+    <label>Email</label>
+    <input id="registerEmail" type="email">
+
+    <label>Mot de passe</label>
+    <input id="registerPassword" type="password">
+
+    <button id="registerBtn">Créer mon compte</button>
+
+  </div>
+
 </section>
 
-<section id="app" class="hidden">
-  <div class="nav">
-    <button data-page="home">🏠 Accueil</button>
-    <button data-page="data">📊 Mes données</button>
-    <button data-page="history">📜 Mon historique</button>
-    <button data-page="chat">💬 Chat</button>
-    <button data-page="profile">👤 Mon profil</button>
-    <button id="adminBtn" data-page="admin" class="hidden">👑 Administration</button>
+
+<!-- =====================================================
+     APPLICATION
+===================================================== -->
+
+<section id="appSection" class="hidden">
+
+<nav>
+
+  <button onclick="showPage('dashboard')">
+    Accueil
+  </button>
+
+  <button onclick="showPage('work')">
+    Travail
+  </button>
+
+  <button onclick="showPage('history')">
+    Historique
+  </button>
+
+  <button onclick="showPage('chat')">
+    Chat
+  </button>
+
+  <button onclick="showPage('profile')">
+    Profil
+  </button>
+
+  <button
+    id="adminNav"
+    class="hidden"
+    onclick="showPage('admin')">
+    Administration
+  </button>
+
+</nav>
+
+
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
+<section id="page-dashboard" class="page">
+
+  <div class="card">
+
+    <h2>Bienvenue <span id="welcomeName"></span></h2>
+
+    <p>
+      Bienvenue sur ton espace INSCcompte.
+    </p>
+
   </div>
 
-  <div id="home" class="card page">
-    <h2>Bienvenue sur INSCcompte</h2>
-    <p id="welcome"></p>
+
+  <div class="grid">
+
+    <div class="stat">
+      <div>Employé</div>
+      <strong id="dashboardEmployee">-</strong>
+    </div>
+
+    <div class="stat">
+      <div>Temps de la période</div>
+      <strong id="dashboardTotal">00:00</strong>
+    </div>
+
+    <div class="stat">
+      <div>Journées enregistrées</div>
+      <strong id="dashboardDays">0</strong>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     TRAVAIL
+===================================================== -->
+
+<section id="page-work" class="page hidden">
+
+  <div class="card">
+
+    <h2>Ma journée de travail</h2>
+
+    <div id="workMessage"></div>
+
     <div class="grid">
-      <div class="kpi"><span>Utilisateur</span><strong id="userName">—</strong></div>
-      <div class="kpi"><span>Rôle</span><strong id="userRole">—</strong></div>
-      <div class="kpi"><span>Statut</span><strong>Connecté</strong></div>
-    </div>
-    <div class="notice">La gestion des employés est maintenant active pour l'administrateur.</div>
-  </div>
 
-  <div id="data" class="card page hidden">
-    <h2>📊 Mes données</h2>
-    <p class="muted">Les comptes et journées de travail seront ajoutés à cette section.</p>
-  </div>
-
-  <div id="history" class="card page hidden">
-    <h2>📜 Mon historique</h2>
-    <p class="muted">L'historique des journées sera ajouté ensuite.</p>
-  </div>
-
-  <div id="chat" class="card page hidden">
-    <h2>💬 Chat</h2>
-    <p class="muted">Le chat sera ajouté ensuite.</p>
-  </div>
-
-  <div id="profile" class="card page hidden">
-    <h2>👤 Mon profil</h2>
-    <form id="profileForm" class="form">
-      <input id="profileUsername" type="text" placeholder="Nom / pseudo" required>
-      <button>Enregistrer mon nom</button>
-    </form>
-    <div id="profileMsg"></div>
-  </div>
-
-  <div id="admin" class="card page hidden">
-    <div class="toolbar">
       <div>
-        <h2>👑 Administration</h2>
-        <div class="muted">Gestion des employés</div>
+        <label>Date</label>
+        <input id="workDate" type="date">
       </div>
-      <div class="actions">
-        <button id="refreshEmployees" class="secondary small">↻ Actualiser</button>
-        <button id="addEmployeeBtn" class="small">＋ Ajouter un employé</button>
+
+      <div>
+        <label>Employé</label>
+        <input id="workEmployeeName" disabled>
       </div>
+
     </div>
 
-    <div id="adminMessage"></div>
-    <div id="employeesLoading" class="notice hidden">Chargement des employés...</div>
-    <div id="employeesError" class="error"></div>
-    <div id="employeesEmpty" class="empty hidden">Aucun employé enregistré.</div>
+    <label>Heure d'entrée</label>
+    <input id="entryTime" type="datetime-local">
 
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>👤 Nom</th>
-            <th>🔐 Compte</th>
-            <th>📅 Créé le</th>
-            <th>⚙️ Actions</th>
-          </tr>
-        </thead>
-        <tbody id="employeesList"></tbody>
-      </table>
+    <label>Heure de sortie</label>
+    <input id="exitTime" type="datetime-local">
+
+    <label>Résultat / remarque</label>
+    <textarea
+      id="workResult"
+      placeholder="Exemple : journée normale, intervention, déplacement..."></textarea>
+
+    <div class="actions">
+
+      <button
+        id="entryBtn"
+        class="success">
+        Enregistrer l'entrée
+      </button>
+
+      <button
+        id="exitBtn"
+        class="secondary">
+        Enregistrer la sortie
+      </button>
+
+      <button
+        id="saveDayBtn">
+        Enregistrer la journée
+      </button>
+
     </div>
+
+    <hr>
+
+    <h3>Total de la journée</h3>
+
+    <div class="stat">
+      <strong id="todayTotal">00:00</strong>
+    </div>
+
   </div>
+
+
+  <div class="card">
+
+    <h2>Période actuelle</h2>
+
+    <p id="currentPeriod"></p>
+
+    <div class="stat">
+      <div>Total travaillé</div>
+      <strong id="periodTotal">00:00</strong>
+    </div>
+
+  </div>
+
 </section>
-</main>
 
-<div id="employeeModal" class="modal hidden">
-  <div class="modal-box">
-    <div class="modal-head">
-      <h2 id="modalTitle">Ajouter un employé</h2>
-      <button id="closeModal" class="close">×</button>
+
+<!-- =====================================================
+     HISTORIQUE
+===================================================== -->
+
+<section id="page-history" class="page hidden">
+
+  <div class="card">
+
+    <h2>Mon historique</h2>
+
+    <div class="actions">
+
+      <button onclick="loadMyHistory()">
+        Actualiser
+      </button>
+
+      <button
+        class="secondary"
+        onclick="filterHistory('current')">
+        Période actuelle
+      </button>
+
+      <button
+        class="secondary"
+        onclick="filterHistory('all')">
+        Tout l'historique
+      </button>
+
     </div>
-    <form id="employeeForm" class="form">
-      <input id="employeeName" type="text" placeholder="Nom de l'employé" required>
-      <input id="employeeUserId" type="text" placeholder="ID utilisateur Supabase (facultatif)">
-      <button id="saveEmployeeBtn">Enregistrer</button>
-      <button type="button" id="cancelEmployeeBtn" class="secondary">Annuler</button>
-    </form>
-    <div id="employeeMsg"></div>
+
+    <hr>
+
+    <div id="historyContent"></div>
+
   </div>
+
+</section>
+
+
+<!-- =====================================================
+     CHAT
+===================================================== -->
+
+<section id="page-chat" class="page hidden">
+
+  <div class="card">
+
+    <h2>Chat</h2>
+
+    <div
+      id="chatMessages"
+      style="max-height:450px;overflow-y:auto;margin-bottom:15px;">
+    </div>
+
+    <textarea
+      id="chatInput"
+      placeholder="Écrire un message..."></textarea>
+
+    <button id="sendMessageBtn">
+      Envoyer
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     PROFIL
+===================================================== -->
+
+<section id="page-profile" class="page hidden">
+
+  <div class="card">
+
+    <h2>Mon profil</h2>
+
+    <div id="profileMessage"></div>
+
+    <label>Nom affiché</label>
+
+    <input
+      id="profileName"
+      type="text">
+
+    <label>Email</label>
+
+    <input
+      id="profileEmail"
+      type="email"
+      disabled>
+
+    <label>Rôle</label>
+
+    <input
+      id="profileRole"
+      disabled>
+
+    <button id="saveProfileBtn">
+      Enregistrer le profil
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     ADMIN
+===================================================== -->
+
+<section id="page-admin" class="page hidden">
+
+  <div class="card">
+
+    <h2>Administration</h2>
+
+    <p>
+      Gestion des employés et consultation des journées.
+    </p>
+
+  </div>
+
+
+  <!-- EMPLOYES -->
+
+  <div class="card">
+
+    <h2>Employés</h2>
+
+    <button onclick="openEmployeeForm()">
+      + Ajouter un employé
+    </button>
+
+    <button
+      class="secondary"
+      onclick="loadEmployees()">
+      Actualiser
+    </button>
+
+    <div id="adminEmployees"></div>
+
+  </div>
+
+
+  <!-- JOURNEES -->
+
+  <div class="card">
+
+    <h2>Journées de travail</h2>
+
+    <div class="grid">
+
+      <div>
+
+        <label>Employé</label>
+
+        <select id="adminEmployeeFilter">
+          <option value="">Tous les employés</option>
+        </select>
+
+      </div>
+
+      <div>
+
+        <label>Date</label>
+
+        <input
+          id="adminDateFilter"
+          type="date">
+
+      </div>
+
+    </div>
+
+    <button onclick="loadAdminWorkDays()">
+      Rechercher
+    </button>
+
+    <div id="adminWorkDays"></div>
+
+  </div>
+
+</section>
+
+</section>
+
+
+<!-- =====================================================
+     MODAL EMPLOYE
+===================================================== -->
+
+<div
+  id="employeeModal"
+  class="hidden"
+  style="
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    padding:20px;
+    z-index:1000;
+  ">
+
+  <div
+    class="card"
+    style="
+      max-width:500px;
+      margin:50px auto;
+    ">
+
+    <h2 id="employeeModalTitle">
+      Ajouter un employé
+    </h2>
+
+    <input
+      id="employeeId"
+      type="hidden">
+
+    <label>Nom</label>
+
+    <input
+      id="employeeName"
+      type="text">
+
+    <label>
+      Identifiant utilisateur Supabase
+      <small>(facultatif)</small>
+    </label>
+
+    <input
+      id="employeeUserId"
+      type="text"
+      placeholder="UUID de l'utilisateur">
+
+    <div class="actions">
+
+      <button onclick="saveEmployee()">
+        Enregistrer
+      </button>
+
+      <button
+        class="secondary"
+        onclick="closeEmployeeForm()">
+        Annuler
+      </button>
+
+    </div>
+
+    <div id="employeeFormMessage"></div>
+
+  </div>
+
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SUPABASE_URL = "https://pszbqpxzkblkbmftknzy.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_YNq8pWr5fu2xoiJNR5ha9A__6pqRwdv";
 
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY,
-  {
-    auth:{
-      persistSession:true,
-      autoRefreshToken:true,
-      detectSessionInUrl:true,
-      storage:window.localStorage
+<script>
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+const SUPABASE_URL =
+  "https://pszbqpxzkblkbmftknzy.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "sb_publishable_YNq8pWr5fu2xoiJNR5ha9A__6pqRwdv";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY,
+    {
+      auth:{
+        persistSession:true,
+        autoRefreshToken:true,
+        detectSessionInUrl:true,
+        storage:window.localStorage
+      }
     }
+  );
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let currentUser = null;
+let currentProfile = null;
+let currentEmployee = null;
+let currentHistoryMode = "current";
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const authSection =
+  document.getElementById("authSection");
+
+const appSection =
+  document.getElementById("appSection");
+
+const authError =
+  document.getElementById("authError");
+
+const logoutBtn =
+  document.getElementById("logoutBtn");
+
+const userInfo =
+  document.getElementById("userInfo");
+
+const adminNav =
+  document.getElementById("adminNav");
+
+
+/* =========================================================
+   UTILITAIRES
+========================================================= */
+
+function showError(element,message){
+
+  element.textContent = message;
+
+  element.classList.remove("hidden");
+
+}
+
+
+function showSuccess(element,message){
+
+  element.textContent = message;
+
+  element.classList.remove("hidden");
+
+}
+
+
+function hide(element){
+
+  element.classList.add("hidden");
+
+}
+
+
+function formatMinutes(minutes){
+
+  minutes = Number(minutes || 0);
+
+  const h =
+    Math.floor(minutes / 60);
+
+  const m =
+    minutes % 60;
+
+  return (
+    String(h).padStart(2,"0")
+    + ":" +
+    String(m).padStart(2,"0")
+  );
+}
+
+
+function calculateMinutes(entry,exit){
+
+  if(!entry || !exit){
+
+    return 0;
+
+  }
+
+  const start =
+    new Date(entry);
+
+  const end =
+    new Date(exit);
+
+  const difference =
+    end.getTime() - start.getTime();
+
+  if(difference <= 0){
+
+    return 0;
+
+  }
+
+  return Math.floor(
+    difference / 60000
+  );
+
+}
+
+
+function localDateString(date = new Date()){
+
+  const year =
+    date.getFullYear();
+
+  const month =
+    String(date.getMonth()+1)
+      .padStart(2,"0");
+
+  const day =
+    String(date.getDate())
+      .padStart(2,"0");
+
+  return `${year}-${month}-${day}`;
+
+}
+
+
+function startOfCurrentPeriod(){
+
+  const now = new Date();
+
+  if(now.getDate() <= 15){
+
+    return new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      1
+    );
+
+  }
+
+  return new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    16
+  );
+
+}
+
+
+function endOfCurrentPeriod(){
+
+  const now = new Date();
+
+  if(now.getDate() <= 15){
+
+    return new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      15
+    );
+
+  }
+
+  return new Date(
+    now.getFullYear(),
+    now.getMonth()+1,
+    0
+  );
+
+}
+
+
+function isDateInCurrentPeriod(dateString){
+
+  const date =
+    new Date(dateString + "T00:00:00");
+
+  return (
+    date >= startOfCurrentPeriod()
+    &&
+    date <= endOfCurrentPeriod()
+  );
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function showPage(page){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(pageElement => {
+
+      pageElement.classList.add("hidden");
+
+    });
+
+  const selected =
+    document.getElementById(
+      "page-" + page
+    );
+
+  if(selected){
+
+    selected.classList.remove("hidden");
+
+  }
+
+  if(page === "dashboard"){
+
+    loadDashboard();
+
+  }
+
+  if(page === "work"){
+
+    prepareWorkPage();
+
+  }
+
+  if(page === "history"){
+
+    loadMyHistory();
+
+  }
+
+  if(page === "chat"){
+
+    loadMessages();
+
+  }
+
+  if(page === "profile"){
+
+    loadProfile();
+
+  }
+
+  if(page === "admin"){
+
+    loadEmployees();
+    loadAdminEmployeeFilter();
+    loadAdminWorkDays();
+
+  }
+
+}
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+async function checkSession(){
+
+  const {
+    data,
+    error
+  } = await supabaseClient.auth.getSession();
+
+  if(error){
+
+    console.error(error);
+
+    return;
+
+  }
+
+  if(data.session){
+
+    currentUser =
+      data.session.user;
+
+    await initializeApp();
+
+  }else{
+
+    showLoggedOut();
+
+  }
+
+}
+
+
+function showLoggedOut(){
+
+  currentUser = null;
+  currentProfile = null;
+  currentEmployee = null;
+
+  authSection
+    .classList
+    .remove("hidden");
+
+  appSection
+    .classList
+    .add("hidden");
+
+  logoutBtn
+    .classList
+    .add("hidden");
+
+  userInfo.textContent = "";
+
+}
+
+
+async function login(){
+
+  hide(authError);
+
+  const email =
+    document
+      .getElementById("loginEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("loginPassword")
+      .value;
+
+  if(!email || !password){
+
+    showError(
+      authError,
+      "Remplis l'email et le mot de passe."
+    );
+
+    return;
+
+  }
+
+  const {
+    error
+  } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if(error){
+
+    showError(
+      authError,
+      error.message
+    );
+
+    return;
+
+  }
+
+}
+
+
+async function register(){
+
+  hide(authError);
+
+  const name =
+    document
+      .getElementById("registerName")
+      .value
+      .trim();
+
+  const email =
+    document
+      .getElementById("registerEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("registerPassword")
+      .value;
+
+  if(!name || !email || !password){
+
+    showError(
+      authError,
+      "Remplis tous les champs."
+    );
+
+    return;
+
+  }
+
+  if(password.length < 6){
+
+    showError(
+      authError,
+      "Le mot de passe doit contenir au moins 6 caractères."
+    );
+
+    return;
+
+  }
+
+  const {
+    data,
+    error
+  } = await supabaseClient.auth.signUp({
+
+    email,
+
+    password,
+
+    options:{
+      data:{
+        name:name
+      }
+    }
+
+  });
+
+  if(error){
+
+    showError(
+      authError,
+      error.message
+    );
+
+    return;
+
+  }
+
+  if(data.session){
+
+    currentUser =
+      data.session.user;
+
+    await initializeApp();
+
+  }else{
+
+    showSuccess(
+      authError,
+      "Compte créé. Vérifie ton email si la confirmation est activée dans Supabase."
+    );
+
+  }
+
+}
+
+
+async function logout(){
+
+  await supabaseClient.auth.signOut();
+
+  showLoggedOut();
+
+}
+
+
+supabaseClient.auth.onAuthStateChange(
+  async (event,session)=>{
+
+    if(session){
+
+      currentUser =
+        session.user;
+
+      await initializeApp();
+
+    }else{
+
+      showLoggedOut();
+
+    }
+
   }
 );
 
-const $ = id => document.getElementById(id);
-let currentProfile = null;
-let editingEmployeeId = null;
-let starting = false;
-let enteringUserId = null;
 
-function msg(el,text,error=false){
-  $(el).textContent = text;
-  $(el).className = error ? "error" : "success";
+/* =========================================================
+   INITIALISATION
+========================================================= */
+
+async function initializeApp(){
+
+  authSection
+    .classList
+    .add("hidden");
+
+  appSection
+    .classList
+    .remove("hidden");
+
+  logoutBtn
+    .classList
+    .remove("hidden");
+
+  await loadProfile();
+
+  await ensureEmployee();
+
+  userInfo.textContent =
+    currentProfile?.name ||
+    currentUser.email ||
+    "";
+
+  if(currentProfile?.role === "admin"){
+
+    adminNav
+      .classList
+      .remove("hidden");
+
+  }else{
+
+    adminNav
+      .classList
+      .add("hidden");
+
+  }
+
+  showPage("dashboard");
+
 }
 
+
+/* =========================================================
+   PROFIL
+========================================================= */
+
+async function loadProfile(){
+
+  if(!currentUser) return;
+
+  let {
+    data,
+    error
+  } = await supabaseClient
+    .from("profiles")
+    .select("*")
+    .eq("id",currentUser.id)
+    .maybeSingle();
+
+  if(error){
+
+    console.error(
+      "Erreur profil:",
+      error
+    );
+
+    return;
+
+  }
+
+  /*
+    Si aucun profil n'existe,
+    on crée un profil employé.
+  */
+
+  if(!data){
+
+    const name =
+      currentUser.user_metadata?.name
+      ||
+      currentUser.email
+      ||
+      "Employé";
+
+    const result =
+      await supabaseClient
+        .from("profiles")
+        .insert({
+
+          id:currentUser.id,
+
+          name:name,
+
+          role:"employee"
+
+        })
+        .select()
+        .single();
+
+    if(result.error){
+
+      console.error(
+        "Création profil:",
+        result.error
+      );
+
+      return;
+
+    }
+
+    data =
+      result.data;
+
+  }
+
+  currentProfile =
+    data;
+
+}
+
+
+async function saveProfile(){
+
+  if(!currentUser) return;
+
+  const message =
+    document.getElementById(
+      "profileMessage"
+    );
+
+  hide(message);
+
+  const name =
+    document
+      .getElementById("profileName")
+      .value
+      .trim();
+
+  if(!name){
+
+    showError(
+      message,
+      "Le nom ne peut pas être vide."
+    );
+
+    return;
+
+  }
+
+  const {
+    error
+  } = await supabaseClient
+    .from("profiles")
+    .update({
+      name:name
+    })
+    .eq("id",currentUser.id);
+
+  if(error){
+
+    showError(
+      message,
+      error.message
+    );
+
+    return;
+
+  }
+
+  currentProfile.name =
+    name;
+
+  userInfo.textContent =
+    name;
+
+  document.getElementById(
+    "welcomeName"
+  ).textContent =
+    name;
+
+  showSuccess(
+    message,
+    "Profil enregistré."
+  );
+
+}
+
+
+/* =========================================================
+   EMPLOYE AUTOMATIQUE
+========================================================= */
+
+async function ensureEmployee(){
+
+  if(!currentUser) return;
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("employees")
+    .select("*")
+    .eq("user_id",currentUser.id)
+    .maybeSingle();
+
+  if(error){
+
+    console.error(
+      "Recherche employé:",
+      error
+    );
+
+    return;
+
+  }
+
+  if(data){
+
+    currentEmployee =
+      data;
+
+    return;
+
+  }
+
+  /*
+    On crée automatiquement la fiche
+    de travail de l'utilisateur.
+  */
+
+  const name =
+    currentProfile?.name
+    ||
+    currentUser.email
+    ||
+    "Employé";
+
+  const result =
+    await supabaseClient
+      .from("employees")
+      .insert({
+
+        user_id:currentUser.id,
+
+        name:name
+
+      })
+      .select()
+      .single();
+
+  if(result.error){
+
+    console.error(
+      "Création employé:",
+      result.error
+    );
+
+    return;
+
+  }
+
+  currentEmployee =
+    result.data;
+
+}
+
+
+/* =========================================================
+   PROFIL UI
+========================================================= */
+
+function loadProfileUI(){
+
+  if(!currentProfile || !currentUser)
+    return;
+
+  document.getElementById(
+    "profileName"
+  ).value =
+    currentProfile.name || "";
+
+  document.getElementById(
+    "profileEmail"
+  ).value =
+    currentUser.email || "";
+
+  document.getElementById(
+    "profileRole"
+  ).value =
+    currentProfile.role || "employee";
+
+}
+
+
+/* =========================================================
+   PAGE TRAVAIL
+========================================================= */
+
+async function prepareWorkPage(){
+
+  if(!currentEmployee){
+
+    await ensureEmployee();
+
+  }
+
+  document.getElementById(
+    "workDate"
+  ).value =
+    localDateString();
+
+  document.getElementById(
+    "workEmployeeName"
+  ).value =
+    currentEmployee?.name || "";
+
+  updatePeriodDisplay();
+
+  await loadToday();
+
+}
+
+
+async function loadToday(){
+
+  if(!currentEmployee) return;
+
+  const date =
+    document
+      .getElementById("workDate")
+      .value;
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("work_days")
+    .select("*")
+    .eq(
+      "employee_id",
+      currentEmployee.id
+    )
+    .eq(
+      "work_date",
+      date
+    )
+    .maybeSingle();
+
+  if(error){
+
+    console.error(error);
+
+    return;
+
+  }
+
+  if(!data){
+
+    document.getElementById(
+      "entryTime"
+    ).value = "";
+
+    document.getElementById(
+      "exitTime"
+    ).value = "";
+
+    document.getElementById(
+      "workResult"
+    ).value = "";
+
+    document.getElementById(
+      "todayTotal"
+    ).textContent =
+      "00:00";
+
+    return;
+
+  }
+
+  if(data.entry_time){
+
+    document.getElementById(
+      "entryTime"
+    ).value =
+      toDateTimeLocal(
+        data.entry_time
+      );
+
+  }
+
+  if(data.exit_time){
+
+    document.getElementById(
+      "exitTime"
+    ).value =
+      toDateTimeLocal(
+        data.exit_time
+      );
+
+  }
+
+  document.getElementById(
+    "workResult"
+  ).value =
+    data.result || "";
+
+  document.getElementById(
+    "todayTotal"
+  ).textContent =
+    formatMinutes(
+      data.total_minutes
+    );
+
+}
+
+
+function toDateTimeLocal(value){
+
+  const date =
+    new Date(value);
+
+  const year =
+    date.getFullYear();
+
+  const month =
+    String(
+      date.getMonth()+1
+    ).padStart(2,"0");
+
+  const day =
+    String(
+      date.getDate()
+    ).padStart(2,"0");
+
+  const hours =
+    String(
+      date.getHours()
+    ).padStart(2,"0");
+
+  const minutes =
+    String(
+      date.getMinutes()
+    ).padStart(2,"0");
+
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
+
+}
+
+
+async function saveEntry(){
+
+  if(!currentEmployee) return;
+
+  const date =
+    document.getElementById(
+      "workDate"
+    ).value;
+
+  const existing =
+    await getWorkDay(date);
+
+  const entry =
+    new Date();
+
+  const payload = {
+
+    employee_id:
+      currentEmployee.id,
+
+    work_date:
+      date,
+
+    entry_time:
+      entry.toISOString(),
+
+    exit_time:
+      existing?.exit_time || null,
+
+    result:
+      existing?.result || "",
+
+    total_minutes:
+      calculateMinutes(
+        entry.toISOString(),
+        existing?.exit_time
+      )
+
+  };
+
+  await saveWorkDay(
+    payload
+  );
+
+}
+
+
+async function saveExit(){
+
+  if(!currentEmployee) return;
+
+  const date =
+    document.getElementById(
+      "workDate"
+    ).value;
+
+  const existing =
+    await getWorkDay(date);
+
+  if(!existing?.entry_time){
+
+    showWorkMessage(
+      "Il faut enregistrer l'entrée avant la sortie.",
+      true
+    );
+
+    return;
+
+  }
+
+  const exit =
+    new Date();
+
+  const total =
+    calculateMinutes(
+      existing.entry_time,
+      exit.toISOString()
+    );
+
+  const payload = {
+
+    employee_id:
+      currentEmployee.id,
+
+    work_date:
+      date,
+
+    entry_time:
+      existing.entry_time,
+
+    exit_time:
+      exit.toISOString(),
+
+    result:
+      document.getElementById(
+        "workResult"
+      ).value,
+
+    total_minutes:
+      total
+
+  };
+
+  await saveWorkDay(
+    payload
+  );
+
+}
+
+
+async function saveManualDay(){
+
+  if(!currentEmployee) return;
+
+  const date =
+    document.getElementById(
+      "workDate"
+    ).value;
+
+  const entry =
+    document.getElementById(
+      "entryTime"
+    ).value;
+
+  const exit =
+    document.getElementById(
+      "exitTime"
+    ).value;
+
+  const result =
+    document.getElementById(
+      "workResult"
+    ).value;
+
+  if(!entry && !exit){
+
+    showWorkMessage(
+      "Ajoute au moins une heure.",
+      true
+    );
+
+    return;
+
+  }
+
+  const entryISO =
+    entry
+      ? new Date(entry).toISOString()
+      : null;
+
+  const exitISO =
+    exit
+      ? new Date(exit).toISOString()
+      : null;
+
+  const total =
+    calculateMinutes(
+      entryISO,
+      exitISO
+    );
+
+  await saveWorkDay({
+
+    employee_id:
+      currentEmployee.id,
+
+    work_date:
+      date,
+
+    entry_time:
+      entryISO,
+
+    exit_time:
+      exitISO,
+
+    result:
+      result,
+
+    total_minutes:
+      total
+
+  });
+
+}
+
+
+async function getWorkDay(date){
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("work_days")
+    .select("*")
+    .eq(
+      "employee_id",
+      currentEmployee.id
+    )
+    .eq(
+      "work_date",
+      date
+    )
+    .maybeSingle();
+
+  if(error){
+
+    console.error(error);
+
+    return null;
+
+  }
+
+  return data;
+
+}
+
+
+async function saveWorkDay(payload){
+
+  const {
+    error
+  } = await supabaseClient
+    .from("work_days")
+    .upsert(
+      payload,
+      {
+        onConflict:
+          "employee_id,work_date"
+      }
+    );
+
+  if(error){
+
+    showWorkMessage(
+      error.message,
+      true
+    );
+
+    return;
+
+  }
+
+  showWorkMessage(
+    "Journée enregistrée avec succès.",
+    false
+  );
+
+  await loadToday();
+
+  await updatePeriodDisplay();
+
+}
+
+
+function showWorkMessage(message,isError){
+
+  const element =
+    document.getElementById(
+      "workMessage"
+    );
+
+  element.textContent =
+    message;
+
+  element.className =
+    isError
+      ? "error"
+      : "success-msg";
+
+}
+
+
+/* =========================================================
+   PERIODE
+========================================================= */
+
+function updatePeriodDisplay(){
+
+  const start =
+    startOfCurrentPeriod();
+
+  const end =
+    endOfCurrentPeriod();
+
+  const startText =
+    localDateString(start);
+
+  const endText =
+    localDateString(end);
+
+  document.getElementById(
+    "currentPeriod"
+  ).textContent =
+    `Période : ${startText} → ${endText}`;
+
+  loadPeriodTotal();
+
+}
+
+
+async function loadPeriodTotal(){
+
+  if(!currentEmployee) return;
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("work_days")
+    .select("total_minutes,work_date")
+    .eq(
+      "employee_id",
+      currentEmployee.id
+    );
+
+  if(error){
+
+    console.error(error);
+
+    return;
+
+  }
+
+  const total =
+    (data || [])
+      .filter(row =>
+        isDateInCurrentPeriod(
+          row.work_date
+        )
+      )
+      .reduce(
+        (sum,row) =>
+          sum + Number(
+            row.total_minutes || 0
+          ),
+        0
+      );
+
+  document.getElementById(
+    "periodTotal"
+  ).textContent =
+    formatMinutes(total);
+
+}
+
+
+/* =========================================================
+   HISTORIQUE EMPLOYE
+========================================================= */
+
+async function loadMyHistory(){
+
+  if(!currentEmployee){
+
+    await ensureEmployee();
+
+  }
+
+  const container =
+    document.getElementById(
+      "historyContent"
+    );
+
+  container.innerHTML =
+    "Chargement...";
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("work_days")
+    .select("*")
+    .eq(
+      "employee_id",
+      currentEmployee.id
+    )
+    .order(
+      "work_date",
+      {
+        ascending:false
+      }
+    );
+
+  if(error){
+
+    container.innerHTML =
+      `<div class="error">${escapeHtml(error.message)}</div>`;
+
+    return;
+
+  }
+
+  let rows =
+    data || [];
+
+  if(currentHistoryMode === "current"){
+
+    rows =
+      rows.filter(row =>
+        isDateInCurrentPeriod(
+          row.work_date
+        )
+      );
+
+  }
+
+  if(!rows.length){
+
+    container.innerHTML =
+      `<div class="empty">Aucune journée enregistrée.</div>`;
+
+    return;
+
+  }
+
+  let total = 0;
+
+  let html = `
+    <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Entrée</th>
+          <th>Sortie</th>
+          <th>Total</th>
+          <th>Résultat</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  rows.forEach(row => {
+
+    total +=
+      Number(
+        row.total_minutes || 0
+      );
+
+    html += `
+      <tr>
+
+        <td>
+          ${escapeHtml(row.work_date)}
+        </td>
+
+        <td>
+          ${
+            row.entry_time
+              ? escapeHtml(
+                  new Date(
+                    row.entry_time
+                  ).toLocaleString("fr-FR")
+                )
+              : "-"
+          }
+        </td>
+
+        <td>
+          ${
+            row.exit_time
+              ? escapeHtml(
+                  new Date(
+                    row.exit_time
+                  ).toLocaleString("fr-FR")
+                )
+              : "-"
+          }
+        </td>
+
+        <td>
+          <strong>
+            ${formatMinutes(row.total_minutes)}
+          </strong>
+        </td>
+
+        <td>
+          ${escapeHtml(row.result || "")}
+        </td>
+
+      </tr>
+    `;
+
+  });
+
+  html += `
+      </tbody>
+    </table>
+    </div>
+
+    <hr>
+
+    <div class="stat">
+      Total : <strong>${formatMinutes(total)}</strong>
+    </div>
+  `;
+
+  container.innerHTML =
+    html;
+
+}
+
+
+function filterHistory(mode){
+
+  currentHistoryMode =
+    mode;
+
+  loadMyHistory();
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+async function loadDashboard(){
+
+  if(!currentEmployee){
+
+    await ensureEmployee();
+
+  }
+
+  document.getElementById(
+    "welcomeName"
+  ).textContent =
+    currentProfile?.name || "";
+
+  document.getElementById(
+    "dashboardEmployee"
+  ).textContent =
+    currentEmployee?.name || "-";
+
+  if(!currentEmployee)
+    return;
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("work_days")
+    .select(
+      "work_date,total_minutes"
+    )
+    .eq(
+      "employee_id",
+      currentEmployee.id
+    );
+
+  if(error){
+
+    console.error(error);
+
+    return;
+
+  }
+
+  const rows =
+    data || [];
+
+  const currentRows =
+    rows.filter(row =>
+      isDateInCurrentPeriod(
+        row.work_date
+      )
+    );
+
+  const total =
+    currentRows.reduce(
+      (sum,row) =>
+        sum +
+        Number(
+          row.total_minutes || 0
+        ),
+      0
+    );
+
+  document.getElementById(
+    "dashboardTotal"
+  ).textContent =
+    formatMinutes(total);
+
+  document.getElementById(
+    "dashboardDays"
+  ).textContent =
+    currentRows.length;
+
+}
+
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+async function loadMessages(){
+
+  const container =
+    document.getElementById(
+      "chatMessages"
+    );
+
+  container.innerHTML =
+    "Chargement...";
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("messages")
+    .select("*")
+    .order(
+      "created_at",
+      {
+        ascending:true
+      }
+    );
+
+  if(error){
+
+    container.innerHTML =
+      `<div class="error">${escapeHtml(error.message)}</div>`;
+
+    return;
+
+  }
+
+  if(!data?.length){
+
+    container.innerHTML =
+      `<div class="empty">Aucun message.</div>`;
+
+    return;
+
+  }
+
+  container.innerHTML =
+    data.map(message => {
+
+      const mine =
+        message.sender_id ===
+        currentUser.id;
+
+      return `
+        <div class="message ${mine ? "mine" : ""}">
+
+          <div>
+            ${escapeHtml(message.content)}
+          </div>
+
+          <small>
+            ${
+              new Date(
+                message.created_at
+              ).toLocaleString("fr-FR")
+            }
+          </small>
+
+        </div>
+      `;
+
+    }).join("");
+
+  container.scrollTop =
+    container.scrollHeight;
+
+}
+
+
+async function sendMessage(){
+
+  const input =
+    document.getElementById(
+      "chatInput"
+    );
+
+  const content =
+    input.value.trim();
+
+  if(!content)
+    return;
+
+  const {
+    error
+  } = await supabaseClient
+    .from("messages")
+    .insert({
+
+      sender_id:
+        currentUser.id,
+
+      content:
+        content
+
+    });
+
+  if(error){
+
+    alert(error.message);
+
+    return;
+
+  }
+
+  input.value = "";
+
+  await loadMessages();
+
+}
+
+
+/* =========================================================
+   ADMIN - EMPLOYES
+========================================================= */
+
+async function loadEmployees(){
+
+  if(currentProfile?.role !== "admin")
+    return;
+
+  const container =
+    document.getElementById(
+      "adminEmployees"
+    );
+
+  container.innerHTML =
+    "Chargement...";
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("employees")
+    .select("*")
+    .order(
+      "name",
+      {
+        ascending:true
+      }
+    );
+
+  if(error){
+
+    container.innerHTML =
+      `<div class="error">${escapeHtml(error.message)}</div>`;
+
+    return;
+
+  }
+
+  if(!data?.length){
+
+    container.innerHTML =
+      `<div class="empty">Aucun employé.</div>`;
+
+    return;
+
+  }
+
+  let html = `
+    <div class="table-wrap">
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Nom</th>
+          <th>User ID</th>
+          <th>Créé le</th>
+          <th>Actions</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+  `;
+
+  data.forEach(employee => {
+
+    html += `
+      <tr>
+
+        <td>
+          <strong>
+            ${escapeHtml(employee.name)}
+          </strong>
+        </td>
+
+        <td>
+          <small>
+            ${escapeHtml(employee.user_id || "-")}
+          </small>
+        </td>
+
+        <td>
+          ${new Date(employee.created_at)
+            .toLocaleDateString("fr-FR")}
+        </td>
+
+        <td>
+
+          <div class="actions">
+
+            <button
+              onclick='editEmployee(${JSON.stringify(employee)})'>
+              Modifier
+            </button>
+
+            <button
+              class="danger"
+              onclick='deleteEmployee(${JSON.stringify(employee)})'>
+              Supprimer
+            </button>
+
+          </div>
+
+        </td>
+
+      </tr>
+    `;
+
+  });
+
+  html += `
+      </tbody>
+
+    </table>
+    </div>
+  `;
+
+  container.innerHTML =
+    html;
+
+}
+
+
+function openEmployeeForm(employee=null){
+
+  document
+    .getElementById("employeeModal")
+    .classList
+    .remove("hidden");
+
+  document.getElementById(
+    "employeeFormMessage"
+  ).innerHTML = "";
+
+  if(employee){
+
+    document.getElementById(
+      "employeeModalTitle"
+    ).textContent =
+      "Modifier un employé";
+
+    document.getElementById(
+      "employeeId"
+    ).value =
+      employee.id;
+
+    document.getElementById(
+      "employeeName"
+    ).value =
+      employee.name || "";
+
+    document.getElementById(
+      "employeeUserId"
+    ).value =
+      employee.user_id || "";
+
+  }else{
+
+    document.getElementById(
+      "employeeModalTitle"
+    ).textContent =
+      "Ajouter un employé";
+
+    document.getElementById(
+      "employeeId"
+    ).value = "";
+
+    document.getElementById(
+      "employeeName"
+    ).value = "";
+
+    document.getElementById(
+      "employeeUserId"
+    ).value = "";
+
+  }
+
+}
+
+
+function editEmployee(employee){
+
+  openEmployeeForm(
+    employee
+  );
+
+}
+
+
+function closeEmployeeForm(){
+
+  document
+    .getElementById("employeeModal")
+    .classList
+    .add("hidden");
+
+}
+
+
+async function saveEmployee(){
+
+  if(currentProfile?.role !== "admin")
+    return;
+
+  const id =
+    document.getElementById(
+      "employeeId"
+    ).value;
+
+  const name =
+    document.getElementById(
+      "employeeName"
+    ).value.trim();
+
+  const userId =
+    document.getElementById(
+      "employeeUserId"
+    ).value.trim();
+
+  const message =
+    document.getElementById(
+      "employeeFormMessage"
+    );
+
+  if(!name){
+
+    showError(
+      message,
+      "Le nom est obligatoire."
+    );
+
+    return;
+
+  }
+
+  const payload = {
+
+    name:name,
+
+    user_id:
+      userId || null
+
+  };
+
+  let result;
+
+  if(id){
+
+    result =
+      await supabaseClient
+        .from("employees")
+        .update(payload)
+        .eq("id",id);
+
+  }else{
+
+    result =
+      await supabaseClient
+        .from("employees")
+        .insert(payload);
+
+  }
+
+  if(result.error){
+
+    showError(
+      message,
+      result.error.message
+    );
+
+    return;
+
+  }
+
+  closeEmployeeForm();
+
+  await loadEmployees();
+
+  await loadAdminEmployeeFilter();
+
+}
+
+
+async function deleteEmployee(employee){
+
+  if(currentProfile?.role !== "admin")
+    return;
+
+  if(!confirm(
+    `Supprimer ${employee.name} ? Toutes ses journées seront également supprimées.`
+  )){
+
+    return;
+
+  }
+
+  const {
+    error
+  } = await supabaseClient
+    .from("employees")
+    .delete()
+    .eq(
+      "id",
+      employee.id
+    );
+
+  if(error){
+
+    alert(error.message);
+
+    return;
+
+  }
+
+  await loadEmployees();
+
+  await loadAdminEmployeeFilter();
+
+  await loadAdminWorkDays();
+
+}
+
+
+/* =========================================================
+   ADMIN - FILTRE EMPLOYES
+========================================================= */
+
+async function loadAdminEmployeeFilter(){
+
+  if(currentProfile?.role !== "admin")
+    return;
+
+  const select =
+    document.getElementById(
+      "adminEmployeeFilter"
+    );
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("employees")
+    .select("id,name")
+    .order(
+      "name",
+      {
+        ascending:true
+      }
+    );
+
+  if(error){
+
+    console.error(error);
+
+    return;
+
+  }
+
+  select.innerHTML =
+    `<option value="">Tous les employés</option>`;
+
+  (data || []).forEach(employee => {
+
+    const option =
+      document.createElement(
+        "option"
+      );
+
+    option.value =
+      employee.id;
+
+    option.textContent =
+      employee.name;
+
+    select.appendChild(
+      option
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   ADMIN - JOURNEES
+========================================================= */
+
+async function loadAdminWorkDays(){
+
+  if(currentProfile?.role !== "admin")
+    return;
+
+  const container =
+    document.getElementById(
+      "adminWorkDays"
+    );
+
+  container.innerHTML =
+    "Chargement...";
+
+  const employeeId =
+    document.getElementById(
+      "adminEmployeeFilter"
+    ).value;
+
+  const date =
+    document.getElementById(
+      "adminDateFilter"
+    ).value;
+
+  let query =
+    supabaseClient
+      .from("work_days")
+      .select(`
+        *,
+        employees (
+          id,
+          name
+        )
+      `)
+      .order(
+        "work_date",
+        {
+          ascending:false
+        }
+      );
+
+  if(employeeId){
+
+    query =
+      query.eq(
+        "employee_id",
+        employeeId
+      );
+
+  }
+
+  if(date){
+
+    query =
+      query.eq(
+        "work_date",
+        date
+      );
+
+  }
+
+  const {
+    data,
+    error
+  } = await query;
+
+  if(error){
+
+    container.innerHTML =
+      `<div class="error">${escapeHtml(error.message)}</div>`;
+
+    return;
+
+  }
+
+  if(!data?.length){
+
+    container.innerHTML =
+      `<div class="empty">Aucune journée trouvée.</div>`;
+
+    return;
+
+  }
+
+  let html = `
+    <div class="table-wrap">
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Employé</th>
+          <th>Date</th>
+          <th>Entrée</th>
+          <th>Sortie</th>
+          <th>Total</th>
+          <th>Résultat</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+  `;
+
+  data.forEach(row => {
+
+    html += `
+      <tr>
+
+        <td>
+          <strong>
+            ${escapeHtml(
+              row.employees?.name || "-"
+            )}
+          </strong>
+        </td>
+
+        <td>
+          ${escapeHtml(row.work_date)}
+        </td>
+
+        <td>
+          ${
+            row.entry_time
+              ? escapeHtml(
+                  new Date(
+                    row.entry_time
+                  ).toLocaleString("fr-FR")
+                )
+              : "-"
+          }
+        </td>
+
+        <td>
+          ${
+            row.exit_time
+              ? escapeHtml(
+                  new Date(
+                    row.exit_time
+                  ).toLocaleString("fr-FR")
+                )
+              : "-"
+          }
+        </td>
+
+        <td>
+          <strong>
+            ${formatMinutes(
+              row.total_minutes
+            )}
+          </strong>
+        </td>
+
+        <td>
+          ${escapeHtml(
+            row.result || ""
+          )}
+        </td>
+
+      </tr>
+    `;
+
+  });
+
+  html += `
+      </tbody>
+
+    </table>
+    </div>
+  `;
+
+  container.innerHTML =
+    html;
+
+}
+
+
+/* =========================================================
+   SECURITE HTML
+========================================================= */
+
 function escapeHtml(value){
+
   return String(value ?? "")
     .replaceAll("&","&amp;")
     .replaceAll("<","&lt;")
     .replaceAll(">","&gt;")
     .replaceAll('"',"&quot;")
     .replaceAll("'","&#039;");
+
 }
 
-function showPage(id){
-  document.querySelectorAll(".page").forEach(x=>x.classList.add("hidden"));
-  const page = $(id);
-  if(!page) return;
-  page.classList.remove("hidden");
-  if(id === "admin" && currentProfile?.role === "admin") loadEmployees();
-}
 
-async function loadProfile(user){
-  const {data,error} = await supabaseClient
-    .from("profiles")
-    .select("*")
-    .eq("id",user.id)
-    .single();
+/* =========================================================
+   EVENEMENTS
+========================================================= */
 
-  if(error){
-    console.error("Profil:",error);
-    return;
+document
+  .getElementById("loginBtn")
+  .addEventListener(
+    "click",
+    login
+  );
+
+
+document
+  .getElementById("registerBtn")
+  .addEventListener(
+    "click",
+    register
+  );
+
+
+logoutBtn
+  .addEventListener(
+    "click",
+    logout
+  );
+
+
+document
+  .getElementById("entryBtn")
+  .addEventListener(
+    "click",
+    saveEntry
+  );
+
+
+document
+  .getElementById("exitBtn")
+  .addEventListener(
+    "click",
+    saveExit
+  );
+
+
+document
+  .getElementById("saveDayBtn")
+  .addEventListener(
+    "click",
+    saveManualDay
+  );
+
+
+document
+  .getElementById("workDate")
+  .addEventListener(
+    "change",
+    loadToday
+  );
+
+
+document
+  .getElementById("saveProfileBtn")
+  .addEventListener(
+    "click",
+    saveProfile
+  );
+
+
+document
+  .getElementById("sendMessageBtn")
+  .addEventListener(
+    "click",
+    sendMessage
+  );
+
+
+/* =========================================================
+   DEMARRAGE
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async () => {
+
+    await checkSession();
+
   }
+);
 
-  currentProfile = data;
-  $("userName").textContent = data.username || "—";
-  $("userRole").textContent = data.role === "admin" ? "👑 Administrateur" : "👤 Employé";
-  $("welcome").textContent = "Bonjour " + (data.username || "") + " !";
-  $("profileUsername").value = data.username || "";
-  $("adminBtn").classList.toggle("hidden", data.role !== "admin");
-}
-
-async function enterApp(session){
-  if(!session?.user) return;
-  if(enteringUserId === session.user.id) return;
-  enteringUserId = session.user.id;
-
-  $("auth").classList.add("hidden");
-  $("app").classList.remove("hidden");
-  $("logout").classList.remove("hidden");
-
-  await loadProfile(session.user);
-  showPage("home");
-  enteringUserId = null;
-}
-
-async function checkSession(){
-  const {data,error} = await supabaseClient.auth.getSession();
-  if(error){ console.error("Session:",error); return; }
-  if(data.session) await enterApp(data.session);
-}
-
-$("loginTab").onclick = ()=>{
-  $("loginForm").classList.remove("hidden");
-  $("registerForm").classList.add("hidden");
-  $("authMsg").textContent="";
-};
-
-$("registerTab").onclick = ()=>{
-  $("loginForm").classList.add("hidden");
-  $("registerForm").classList.remove("hidden");
-  $("authMsg").textContent="";
-};
-
-$("loginForm").onsubmit = async e=>{
-  e.preventDefault();
-  const {data,error} = await supabaseClient.auth.signInWithPassword({
-    email:$("loginEmail").value.trim(),
-    password:$("loginPassword").value
-  });
-  if(error){ msg("authMsg",error.message,true); return; }
-  await enterApp(data.session);
-};
-
-$("registerForm").onsubmit = async e=>{
-  e.preventDefault();
-  const {data,error} = await supabaseClient.auth.signUp({
-    email:$("regEmail").value.trim(),
-    password:$("regPassword").value,
-    options:{data:{username:$("regUsername").value.trim()}}
-  });
-  if(error){ msg("authMsg",error.message,true); return; }
-  if(data.session){
-    await enterApp(data.session);
-  }else{
-    msg("authMsg","Compte créé. Confirme ton e-mail si Supabase le demande, puis connecte-toi.");
-  }
-};
-
-$("profileForm").onsubmit = async e=>{
-  e.preventDefault();
-  if(!currentProfile) return;
-  const username = $("profileUsername").value.trim();
-  const {data,error} = await supabaseClient
-    .from("profiles").update({username})
-    .eq("id",currentProfile.id).select().single();
-
-  if(error){ msg("profileMsg",error.message,true); return; }
-  currentProfile = data;
-  $("userName").textContent = username;
-  $("welcome").textContent = "Bonjour " + username + " !";
-  msg("profileMsg","Nom enregistré.");
-};
-
-function openEmployeeModal(employee=null){
-  editingEmployeeId = employee?.id || null;
-  $("modalTitle").textContent = employee ? "Modifier un employé" : "Ajouter un employé";
-  $("employeeName").value = employee?.name || "";
-  $("employeeUserId").value = employee?.user_id || "";
-  $("employeeMsg").textContent = "";
-  $("employeeModal").classList.remove("hidden");
-  setTimeout(()=>$("employeeName").focus(),50);
-}
-
-function closeEmployeeModal(){
-  editingEmployeeId = null;
-  $("employeeModal").classList.add("hidden");
-  $("employeeForm").reset();
-  $("employeeMsg").textContent="";
-}
-
-async function loadEmployees(){
-  if(currentProfile?.role !== "admin") return;
-
-  $("employeesLoading").classList.remove("hidden");
-  $("employeesError").textContent="";
-  $("employeesEmpty").classList.add("hidden");
-  $("employeesList").innerHTML="";
-
-  const {data,error} = await supabaseClient
-    .from("employees")
-    .select("id,name,user_id,created_at")
-    .order("created_at",{ascending:false});
-
-  $("employeesLoading").classList.add("hidden");
-
-  if(error){
-    $("employeesError").textContent = "Impossible de charger les employés : " + error.message;
-    return;
-  }
-
-  if(!data?.length){
-    $("employeesEmpty").classList.remove("hidden");
-    return;
-  }
-
-  data.forEach(employee=>{
-    const tr=document.createElement("tr");
-    const date=employee.created_at
-      ? new Date(employee.created_at).toLocaleDateString("fr-FR")
-      : "—";
-    tr.innerHTML=`
-      <td><strong>${escapeHtml(employee.name)}</strong></td>
-      <td>${employee.user_id ? '<span class="badge">Compte lié</span>' : '<span class="muted">Aucun</span>'}</td>
-      <td>${date}</td>
-      <td>
-        <div class="actions">
-          <button class="small secondary edit-btn">✏️ Modifier</button>
-          <button class="small danger delete-btn">🗑️ Supprimer</button>
-        </div>
-      </td>`;
-    tr.querySelector(".edit-btn").onclick=()=>openEmployeeModal(employee);
-    tr.querySelector(".delete-btn").onclick=()=>deleteEmployee(employee);
-    $("employeesList").appendChild(tr);
-  });
-}
-
-$("employeeForm").onsubmit = async e=>{
-  e.preventDefault();
-  if(currentProfile?.role !== "admin") return;
-
-  const name=$("employeeName").value.trim();
-  const userId=$("employeeUserId").value.trim() || null;
-  if(!name){ msg("employeeMsg","Le nom est obligatoire.",true); return; }
-
-  $("saveEmployeeBtn").disabled=true;
-
-  let result;
-  if(editingEmployeeId){
-    result=await supabaseClient
-      .from("employees")
-      .update({name,user_id:userId})
-      .eq("id",editingEmployeeId)
-      .select().single();
-  }else{
-    result=await supabaseClient
-      .from("employees")
-      .insert({name,user_id:userId})
-      .select().single();
-  }
-
-  $("saveEmployeeBtn").disabled=false;
-
-  if(result.error){
-    msg("employeeMsg",result.error.message,true);
-    return;
-  }
-
-  closeEmployeeModal();
-  await loadEmployees();
-  msg("adminMessage",editingEmployeeId ? "Employé modifié." : "Employé ajouté.");
-};
-
-async function deleteEmployee(employee){
-  if(!currentProfile?.role==="admin") return;
-  const ok=confirm('Supprimer l’employé "'+employee.name+'", ainsi que ses journées associées ?');
-  if(!ok) return;
-
-  const {error}=await supabaseClient
-    .from("employees").delete().eq("id",employee.id);
-
-  if(error){
-    msg("adminMessage","Impossible de supprimer : "+error.message,true);
-    return;
-  }
-  msg("adminMessage","Employé supprimé.");
-  await loadEmployees();
-}
-
-$("addEmployeeBtn").onclick=()=>openEmployeeModal();
-$("refreshEmployees").onclick=loadEmployees;
-$("closeModal").onclick=closeEmployeeModal;
-$("cancelEmployeeBtn").onclick=closeEmployeeModal;
-$("employeeModal").onclick=e=>{if(e.target===$("employeeModal")) closeEmployeeModal();};
-
-$("logout").onclick=async()=>{
-  await supabaseClient.auth.signOut();
-  currentProfile=null;
-  $("app").classList.add("hidden");
-  $("logout").classList.add("hidden");
-  $("auth").classList.remove("hidden");
-  showPage("home");
-};
-
-document.querySelectorAll("[data-page]").forEach(btn=>{
-  btn.onclick=()=>{
-    const page=btn.dataset.page;
-    if(page==="admin" && currentProfile?.role!=="admin") return;
-    showPage(page);
-  };
-});
-
-supabaseClient.auth.onAuthStateChange(async(_event,session)=>{
-  if(session && !starting) await enterApp(session);
-});
-
-(async()=>{
-  starting=true;
-  await checkSession();
-  starting=false;
-})();
 </script>
+
 </body>
 </html>
