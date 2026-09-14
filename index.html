@@ -3,294 +3,838 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Gestion des comptes</title>
+<title>INSCcompte</title>
+
 <style>
-:root{--bg:#f5f7f9;--card:#fff;--ink:#18212b;--muted:#66727f;--line:#dfe5ea;--accent:#087f8c;--accent2:#075f69;--danger:#b42318;--ok:#147d43}
-*{box-sizing:border-box} body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
-header{background:linear-gradient(135deg,#087f8c,#075f69);color:#fff;padding:28px 20px}
-header .wrap,.wrap{max-width:1200px;margin:auto} h1{margin:0 0 7px;font-size:28px} header p{margin:0;opacity:.9}
-main{max-width:1200px;margin:22px auto;padding:0 16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:20px;box-shadow:0 4px 14px #102a430d}
-h2{margin:0 0 16px;font-size:20px}.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-bottom:6px}
-input,select,button{width:100%;height:42px;border:1px solid #cbd5dc;border-radius:9px;padding:0 11px;font-size:15px;background:#fff}
-button{background:var(--accent);border:0;color:white;font-weight:700;cursor:pointer}button:hover{background:var(--accent2)}
-.actions{display:flex;gap:10px;margin-top:14px}.actions button{width:auto;padding:0 18px}.secondary{background:#eef3f5;color:#23313b}.secondary:hover{background:#e1e9ed;color:#23313b}.danger{background:#fff0ef;color:var(--danger);border:1px solid #f2c4c0}.danger:hover{background:#ffe4e1}.kpi span{display:block;color:var(--muted);font-size:13px}.kpi strong{font-size:23px;display:block;margin-top:5px}
-.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left}th{background:#edf5f6;color:#24424a;font-size:13px}td.num{text-align:right}.positive{color:var(--ok);font-weight:700}.negative{color:var(--danger);font-weight:700}
-.empty{padding:25px;text-align:center;color:var(--muted)}
-.badge{display:inline-block;padding:4px 8px;border-radius:99px;background:#e8f5f6;color:#075f69;font-size:12px;font-weight:700}
-@media(max-width:850px){.grid{grid-template-columns:1fr 1fr}.grid .full{grid-column:1/-1}}
-@media(max-width:520px){.grid{grid-template-columns:1fr}}
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f7f9;
+  color:#18212b;
+}
+
+header{
+  background:linear-gradient(135deg,#087f8c,#075f69);
+  color:white;
+  padding:22px 20px;
+}
+
+.header-inner{
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:bold;
+}
+
+.user-info{
+  font-size:14px;
+  text-align:right;
+}
+
+main{
+  max-width:1100px;
+  margin:30px auto;
+  padding:0 16px;
+}
+
+.card{
+  background:white;
+  border:1px solid #dfe5ea;
+  border-radius:16px;
+  padding:24px;
+  margin-bottom:20px;
+  box-shadow:0 5px 18px rgba(16,42,67,.08);
+}
+
+.auth{
+  max-width:480px;
+  margin:50px auto;
+}
+
+h1,h2,h3{
+  margin-top:0;
+}
+
+.subtitle{
+  color:#66727f;
+}
+
+label{
+  display:block;
+  margin:14px 0 6px;
+  font-weight:bold;
+  font-size:14px;
+}
+
+input{
+  width:100%;
+  height:44px;
+  border:1px solid #cbd5dc;
+  border-radius:9px;
+  padding:0 12px;
+  font-size:15px;
+}
+
+button{
+  border:0;
+  border-radius:9px;
+  padding:12px 18px;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+  background:#087f8c;
+  color:white;
+}
+
+button:hover{
+  background:#075f69;
+}
+
+button.secondary{
+  background:#edf2f4;
+  color:#26343d;
+}
+
+button.danger{
+  background:#b42318;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+
+.message{
+  margin-top:15px;
+  padding:12px;
+  border-radius:9px;
+  display:none;
+}
+
+.message.error{
+  display:block;
+  background:#fff0ef;
+  color:#a32118;
+}
+
+.message.success{
+  display:block;
+  background:#eaf7ef;
+  color:#176b3a;
+}
+
+.badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:20px;
+  background:#e8f5f6;
+  color:#075f69;
+  font-weight:bold;
+  font-size:13px;
+}
+
+.hidden{
+  display:none !important;
+}
+
+.menu{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.menu button{
+  background:white;
+  color:#075f69;
+  border:1px solid #d5e0e4;
+}
+
+.menu button.active{
+  background:#087f8c;
+  color:white;
+}
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.dashboard-box{
+  padding:20px;
+  border:1px solid #dfe5ea;
+  border-radius:12px;
+  background:#fafcfd;
+}
+
+.dashboard-box strong{
+  display:block;
+  font-size:25px;
+  margin-top:8px;
+}
+
+.small{
+  font-size:13px;
+  color:#66727f;
+}
+
+@media(max-width:700px){
+  .header-inner{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .user-info{
+    text-align:left;
+  }
+
+  .dashboard-grid{
+    grid-template-columns:1fr;
+  }
+}
 </style>
 </head>
+
 <body>
-<header><div class="wrap"><h1>Gestion des comptes</h1><p>Enregistrez les entrées et sorties par employé et par compte. Le total est calculé automatiquement : <b>Sortie − Entrée</b>.</p></div></header>
+
+<header id="siteHeader" class="hidden">
+  <div class="header-inner">
+    <div class="logo">INSCcompte</div>
+
+    <div class="user-info">
+      <div id="headerUsername">Utilisateur</div>
+      <div id="headerRole"></div>
+    </div>
+  </div>
+</header>
+
+
 <main>
-<section class="card">
-<h2>Nouvelle opération</h2>
-<div class="grid">
-<div><label for="date">Date</label><input id="date" type="date"></div>
-<div><label for="nom">Nom employé</label><select id="nom"></select></div>
-<div><label for="compte">Nom du compte</label><select id="compte"></select></div>
-<div><label for="entree">Entrée</label><input id="entree" type="number" min="0" step="0.01" value="0" placeholder="0"></div>
-<div><label for="sortie">Sortie</label><input id="sortie" type="number" min="0" step="0.01" value="0" placeholder="0"></div>
-</div>
-<div class="actions"><button id="add">Ajouter l'opération</button><button class="secondary" id="sample">Charger l'exemple</button></div>
-</section>
 
-<section class="card">
-<h2>Résultat par date, employé et compte</h2>
-<p style="margin:-8px 0 16px;color:var(--muted);font-size:14px">
-Chaque ligne correspond au résultat d’un compte pour un employé à une date donnée.
-Le calcul est <b>Sortie − Entrée</b>. Les résultats sont classés par date.
-</p>
-<div class="table-wrap">
-<table><thead><tr><th>Date</th><th>Nom</th><th>Compte</th><th>Entrée</th><th>Sortie</th><th>Résultat</th></tr></thead>
-<tbody id="result"></tbody></table>
-<div id="empty" class="empty">Aucune opération enregistrée.</div>
-</div>
-</section>
+  <!-- CONNEXION -->
+  <section id="loginPage" class="card auth">
 
-<section class="card">
-<h2>Résumé de chaque compte par date</h2>
-<p style="margin:-8px 0 16px;color:var(--muted);font-size:14px">
-Résumé de toutes les opérations pour chaque compte et chaque date.
-Le résultat est calculé avec <b>Sortie − Entrée</b>.
-</p>
-<div class="table-wrap">
-<table><thead><tr><th>Date</th><th>Compte</th><th>Résultat</th></tr></thead>
-<tbody id="accountSummary"></tbody></table>
-<div id="accountSummaryEmpty" class="empty">Aucune opération enregistrée.</div>
-</div>
-</section>
+    <h1>Connexion</h1>
 
-<section class="card">
-<h2>Résumé par nom</h2>
-<p style="margin:-8px 0 16px;color:var(--muted);font-size:14px">
-Résultat total de chaque employé. Le calcul est <b>Sortie − Entrée</b>.
-</p>
-<div class="table-wrap">
-<table><thead><tr><th>Nom</th><th>Résultat</th></tr></thead>
-<tbody id="nameSummary"></tbody></table>
-<div id="nameSummaryEmpty" class="empty">Aucune opération enregistrée.</div>
-</div>
-</section>
+    <p class="subtitle">
+      Connectez-vous à votre compte INSCcompte.
+    </p>
 
-<section class="card">
-<h2>Historique des opérations</h2>
-<div class="actions" style="margin-top:0"><button class="danger" id="clear">Effacer toutes les opérations</button></div>
-<div class="table-wrap">
-<table><thead><tr><th>Date</th><th>Nom</th><th>Compte</th><th>Entrée</th><th>Sortie</th><th>Total</th><th></th></tr></thead>
-<tbody id="history"></tbody></table>
-<div id="historyEmpty" class="empty">Aucune opération.</div>
-</div>
-</section>
+    <label for="loginEmail">Email</label>
+    <input
+      id="loginEmail"
+      type="email"
+      placeholder="votre@email.com"
+    >
+
+    <label for="loginPassword">Mot de passe</label>
+    <input
+      id="loginPassword"
+      type="password"
+      placeholder="Votre mot de passe"
+    >
+
+    <div class="actions">
+      <button id="loginButton">
+        Se connecter
+      </button>
+
+      <button id="showRegisterButton" class="secondary">
+        Créer un compte
+      </button>
+    </div>
+
+    <div id="loginMessage" class="message"></div>
+
+  </section>
+
+
+  <!-- INSCRIPTION -->
+  <section id="registerPage" class="card auth hidden">
+
+    <h1>Créer un compte</h1>
+
+    <p class="subtitle">
+      Créez votre compte personnel.
+    </p>
+
+    <label for="registerUsername">Nom / prénom</label>
+    <input
+      id="registerUsername"
+      type="text"
+      placeholder="Votre nom"
+    >
+
+    <label for="registerEmail">Email</label>
+    <input
+      id="registerEmail"
+      type="email"
+      placeholder="votre@email.com"
+    >
+
+    <label for="registerPassword">Mot de passe</label>
+    <input
+      id="registerPassword"
+      type="password"
+      placeholder="Minimum 6 caractères"
+    >
+
+    <div class="actions">
+
+      <button id="registerButton">
+        Créer mon compte
+      </button>
+
+      <button id="showLoginButton" class="secondary">
+        Retour à la connexion
+      </button>
+
+    </div>
+
+    <div id="registerMessage" class="message"></div>
+
+  </section>
+
+
+  <!-- SITE PRINCIPAL -->
+  <section id="appPage" class="hidden">
+
+    <div class="menu">
+
+      <button id="homeButton" class="active">
+        🏠 Accueil
+      </button>
+
+      <button id="profileButton">
+        👤 Mon profil
+      </button>
+
+      <button id="logoutButton" class="danger">
+        🚪 Déconnexion
+      </button>
+
+    </div>
+
+
+    <!-- ACCUEIL -->
+    <section id="homeSection" class="card">
+
+      <h1>Bienvenue sur INSCcompte</h1>
+
+      <p class="subtitle">
+        Votre espace personnel de gestion.
+      </p>
+
+      <div class="dashboard-grid">
+
+        <div class="dashboard-box">
+          <div class="small">Utilisateur</div>
+          <strong id="dashboardUsername">-</strong>
+        </div>
+
+        <div class="dashboard-box">
+          <div class="small">Rôle</div>
+          <strong id="dashboardRole">-</strong>
+        </div>
+
+        <div class="dashboard-box">
+          <div class="small">Statut</div>
+          <strong>Connecté</strong>
+        </div>
+
+      </div>
+
+      <div id="adminMessage" class="card hidden" style="margin-top:20px;background:#fffaf0">
+        <h3>👑 Espace administrateur</h3>
+        <p>
+          Les prochaines étapes permettront à l'administrateur
+          de gérer les employés, les comptes, les données journalières
+          et l'historique.
+        </p>
+      </div>
+
+      <div id="employeeMessage" class="card hidden" style="margin-top:20px;background:#f5fbfc">
+        <h3>👤 Espace employé</h3>
+        <p>
+          Les prochaines étapes permettront à l'employé
+          de consulter ses propres données et son historique.
+        </p>
+      </div>
+
+    </section>
+
+
+    <!-- PROFIL -->
+    <section id="profileSection" class="card hidden">
+
+      <h1>Mon profil</h1>
+
+      <p class="subtitle">
+        Vous pourrez modifier votre nom d'utilisateur ici.
+      </p>
+
+      <label for="profileUsername">
+        Nom / prénom
+      </label>
+
+      <input
+        id="profileUsername"
+        type="text"
+      >
+
+      <div class="actions">
+
+        <button id="saveProfileButton">
+          Enregistrer
+        </button>
+
+      </div>
+
+      <div id="profileMessage" class="message"></div>
+
+    </section>
+
+  </section>
+
 </main>
 
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-/*
-  CONFIGURATION SUPABASE
-  1. Remplace YOUR_SUPABASE_ANON_KEY par la clé "anon public" de ton projet Supabase.
-  2. L'URL du projet est déjà renseignée.
-*/
-const SUPABASE_URL = "https://pszbqpxzkblkbmftknzy.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_YNq8pWr5fu2xoiJNR5ha9A__6pqRwdv";
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const names=["Ravaka","Mampionina","Antso","Anja","Franck","Baba","Miary","Lanto","Radoko","Julio","Zo","Mamy"];
-const accounts=["RabaryNOM","AnjamalalaRAK","NirinaRAN","Basilah","Joelison","Sandrinah","Mamiarisoa","AinaVAL","Fredericko","Finoana","SedyRAM","Andiramampionina","MbolaRAK"];
-const $=id=>document.getElementById(id);
-const money=n=>new Intl.NumberFormat("fr-FR",{minimumFractionDigits:0,maximumFractionDigits:2}).format(n);
-let ops=[];
+const SUPABASE_URL =
+  "https://pszbqpxzkblkbmftknzy.supabase.co";
 
-function fill(){
-  $("nom").innerHTML=names.map(x=>`<option>${x}</option>`).join("");
-  $("compte").innerHTML=accounts.map(x=>`<option>${x}</option>`).join("");
-  $("date").value=new Date().toISOString().slice(0,10);
+const SUPABASE_ANON_KEY =
+  "sb_publishable_YNq8pWr5fu2xoiJNR5ha9A__6pqRwdv";
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+
+let currentUser = null;
+let currentProfile = null;
+
+
+const $ = id =>
+  document.getElementById(id);
+
+
+function showMessage(element,message,type){
+
+  element.textContent = message;
+
+  element.className =
+    "message " + type;
 }
 
-async function loadOps(){
-  const {data,error}=await supabaseClient
-    .from("operations")
-    .select("*")
-    .order("date",{ascending:false})
-    .order("id",{ascending:false});
+
+function hideMessage(element){
+
+  element.textContent = "";
+
+  element.className =
+    "message";
+}
+
+
+function showLogin(){
+
+  $("loginPage").classList.remove("hidden");
+  $("registerPage").classList.add("hidden");
+  $("appPage").classList.add("hidden");
+  $("siteHeader").classList.add("hidden");
+
+}
+
+
+function showRegister(){
+
+  $("loginPage").classList.add("hidden");
+  $("registerPage").classList.remove("hidden");
+  $("appPage").classList.add("hidden");
+  $("siteHeader").classList.add("hidden");
+
+}
+
+
+function showApp(){
+
+  $("loginPage").classList.add("hidden");
+  $("registerPage").classList.add("hidden");
+  $("appPage").classList.remove("hidden");
+  $("siteHeader").classList.remove("hidden");
+
+}
+
+
+async function loadProfile(){
+
+  if(!currentUser) return;
+
+  const {data,error} =
+    await supabaseClient
+      .from("profiles")
+      .select("id,username,role")
+      .eq("id",currentUser.id)
+      .single();
 
   if(error){
+
     console.error(error);
-    alert("Erreur Supabase : "+error.message);
+
+    alert(
+      "Impossible de charger votre profil : "
+      + error.message
+    );
+
     return;
-  }
-  ops=data||[];
-  render();
-}
 
-async function addOp(o){
-  const {error}=await supabaseClient.from("operations").insert([o]);
-  if(error){
-    console.error(error);
-    alert("Impossible d'ajouter l'opération : "+error.message);
-    return;
-  }
-  await loadOps();
-}
-
-async function delOp(id){
-  if(!confirm("Supprimer cette opération ?")) return;
-  const {error}=await supabaseClient.from("operations").delete().eq("id",id);
-  if(error){
-    console.error(error);
-    alert("Impossible de supprimer l'opération : "+error.message);
-    return;
-  }
-  await loadOps();
-}
-
-async function clearAll(){
-  if(!confirm("Effacer TOUTES les opérations de la base Supabase ?")) return;
-  const {error}=await supabaseClient.from("operations").delete().not("id","is",null);
-  if(error){
-    console.error(error);
-    alert("Impossible d'effacer les opérations : "+error.message);
-    return;
-  }
-  await loadOps();
-}
-
-function render(){
-  const grouped={};
-  ops.forEach(o=>{
-    const key=o.date+"|||"+o.nom+"|||"+o.compte;
-    if(!grouped[key]) grouped[key]={date:o.date,nom:o.nom,compte:o.compte,entree:0,sortie:0};
-    grouped[key].entree+=Number(o.entree)||0;
-    grouped[key].sortie+=Number(o.sortie)||0;
-  });
-
-  const rows=Object.values(grouped)
-    .sort((a,b)=>{
-      if(a.date!==b.date) return b.date.localeCompare(a.date);
-      if(a.nom!==b.nom) return a.nom.localeCompare(b.nom);
-      return a.compte.localeCompare(b.compte);
-    })
-    .map(g=>{
-      const net=g.sortie-g.entree;
-      return `<tr>
-        <td>${g.date}</td>
-        <td><b>${g.nom}</b></td>
-        <td><span class="badge">${g.compte}</span></td>
-        <td class="num">${money(g.entree)}</td>
-        <td class="num">${money(g.sortie)}</td>
-        <td class="num ${net>=0?'positive':'negative'}"><b>${money(net)}</b></td>
-      </tr>`;
-    }).join("");
-
-  $("result").innerHTML=rows;
-  $("empty").style.display=rows?"none":"block";
-
-  const accountGrouped={};
-  ops.forEach(o=>{
-    const key=o.date+"|||"+o.compte;
-    if(!accountGrouped[key]) accountGrouped[key]={date:o.date,compte:o.compte,entree:0,sortie:0};
-    accountGrouped[key].entree+=Number(o.entree)||0;
-    accountGrouped[key].sortie+=Number(o.sortie)||0;
-  });
-
-  const accountRows=Object.values(accountGrouped)
-    .sort((a,b)=>{
-      if(a.date!==b.date) return b.date.localeCompare(a.date);
-      return a.compte.localeCompare(b.compte);
-    })
-    .map(g=>{
-      const net=g.sortie-g.entree;
-      return `<tr>
-        <td>${g.date}</td>
-        <td><span class="badge">${g.compte}</span></td>
-        <td class="num ${net>=0?'positive':'negative'}"><b>${money(net)}</b></td>
-      </tr>`;
-    }).join("");
-
-  $("accountSummary").innerHTML=accountRows;
-  $("accountSummaryEmpty").style.display=accountRows?"none":"block";
-
-  const nameGrouped={};
-  ops.forEach(o=>{
-    if(!nameGrouped[o.nom]) nameGrouped[o.nom]={nom:o.nom,entree:0,sortie:0};
-    nameGrouped[o.nom].entree+=Number(o.entree)||0;
-    nameGrouped[o.nom].sortie+=Number(o.sortie)||0;
-  });
-
-  const nameRows=Object.values(nameGrouped)
-    .sort((a,b)=>a.nom.localeCompare(b.nom))
-    .map(g=>{
-      const net=g.sortie-g.entree;
-      return `<tr>
-        <td><b>${g.nom}</b></td>
-        <td class="num ${net>=0?'positive':'negative'}"><b>${money(net)}</b></td>
-      </tr>`;
-    }).join("");
-
-  $("nameSummary").innerHTML=nameRows;
-  $("nameSummaryEmpty").style.display=nameRows?"none":"block";
-
-  const h=ops.map(o=>{
-    const net=(Number(o.sortie)||0)-(Number(o.entree)||0);
-    return `<tr>
-      <td>${o.date}</td>
-      <td>${o.nom}</td>
-      <td>${o.compte}</td>
-      <td class="num">${money(o.entree)}</td>
-      <td class="num">${money(o.sortie)}</td>
-      <td class="num ${net>=0?'positive':'negative'}">${money(net)}</td>
-      <td><button class="danger" style="width:auto;height:32px" onclick="delOp('${o.id}')">Supprimer</button></td>
-    </tr>`;
-  }).join("");
-
-  $("history").innerHTML=h;
-  $("historyEmpty").style.display=h?"none":"block";
-}
-
-$("add").onclick=async()=>{
-  const entree=Number($("entree").value)||0;
-  const sortie=Number($("sortie").value)||0;
-
-  if(entree===0&&sortie===0){
-    alert("Indiquez une entrée ou une sortie.");
-    return;
   }
 
-  await addOp({
-    date:$("date").value,
-    nom:$("nom").value,
-    compte:$("compte").value,
-    entree,
-    sortie
-  });
+  currentProfile = data;
 
-  $("entree").value=0;
-  $("sortie").value=0;
+  $("headerUsername").textContent =
+    data.username || "Utilisateur";
+
+  $("headerRole").innerHTML =
+    data.role === "admin"
+      ? '<span class="badge">👑 Administrateur</span>'
+      : '<span class="badge">👤 Employé</span>';
+
+  $("dashboardUsername").textContent =
+    data.username || "-";
+
+  $("dashboardRole").textContent =
+    data.role === "admin"
+      ? "Administrateur"
+      : "Employé";
+
+  $("profileUsername").value =
+    data.username || "";
+
+  if(data.role === "admin"){
+
+    $("adminMessage").classList.remove("hidden");
+    $("employeeMessage").classList.add("hidden");
+
+  }else{
+
+    $("adminMessage").classList.add("hidden");
+    $("employeeMessage").classList.remove("hidden");
+
+  }
+
+}
+
+
+async function startApp(user){
+
+  currentUser = user;
+
+  showApp();
+
+  await loadProfile();
+
+}
+
+
+$("showRegisterButton").onclick = () => {
+
+  hideMessage($("loginMessage"));
+
+  showRegister();
+
 };
 
-$("sample").onclick=async()=>{
-  const sample=[
-    {date:"2026-09-13",nom:"Antso",compte:"AnjamalalaRAK",entree:0,sortie:60},
-    {date:"2026-09-13",nom:"Antso",compte:"RabaryNOM",entree:0,sortie:10},
-    {date:"2026-09-13",nom:"Franck",compte:"RabaryNOM",entree:24,sortie:0},
-    {date:"2026-09-13",nom:"Franck",compte:"MbolaRAK",entree:84,sortie:0}
-  ];
 
-  const {error}=await supabaseClient.from("operations").insert(sample);
-  if(error){
-    alert("Impossible de charger l'exemple : "+error.message);
-    return;
-  }
-  await loadOps();
+$("showLoginButton").onclick = () => {
+
+  hideMessage($("registerMessage"));
+
+  showLogin();
+
 };
 
-$("clear").onclick=clearAll;
 
-fill();
-loadOps();
+$("loginButton").onclick = async () => {
+
+  const email =
+    $("loginEmail").value.trim();
+
+  const password =
+    $("loginPassword").value;
+
+  if(!email || !password){
+
+    showMessage(
+      $("loginMessage"),
+      "Veuillez remplir tous les champs.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  $("loginButton").disabled = true;
+
+  const {data,error} =
+    await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+  $("loginButton").disabled = false;
+
+  if(error){
+
+    showMessage(
+      $("loginMessage"),
+      "Connexion impossible : " + error.message,
+      "error"
+    );
+
+    return;
+
+  }
+
+  showMessage(
+    $("loginMessage"),
+    "Connexion réussie.",
+    "success"
+  );
+
+  await startApp(data.user);
+
+};
+
+
+$("registerButton").onclick = async () => {
+
+  const username =
+    $("registerUsername").value.trim();
+
+  const email =
+    $("registerEmail").value.trim();
+
+  const password =
+    $("registerPassword").value;
+
+  if(!username || !email || !password){
+
+    showMessage(
+      $("registerMessage"),
+      "Veuillez remplir tous les champs.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  if(password.length < 6){
+
+    showMessage(
+      $("registerMessage"),
+      "Le mot de passe doit contenir au moins 6 caractères.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  $("registerButton").disabled = true;
+
+  const {data,error} =
+    await supabaseClient.auth.signUp({
+
+      email,
+
+      password,
+
+      options:{
+        data:{
+          username:username
+        }
+      }
+
+    });
+
+  $("registerButton").disabled = false;
+
+  if(error){
+
+    showMessage(
+      $("registerMessage"),
+      "Inscription impossible : " + error.message,
+      "error"
+    );
+
+    return;
+
+  }
+
+  if(data.session){
+
+    await startApp(data.user);
+
+  }else{
+
+    showMessage(
+      $("registerMessage"),
+      "Compte créé. Vérifiez votre email puis connectez-vous.",
+      "success"
+    );
+
+  }
+
+};
+
+
+$("logoutButton").onclick = async () => {
+
+  await supabaseClient.auth.signOut();
+
+  currentUser = null;
+  currentProfile = null;
+
+  showLogin();
+
+};
+
+
+$("homeButton").onclick = () => {
+
+  $("homeSection").classList.remove("hidden");
+  $("profileSection").classList.add("hidden");
+
+  $("homeButton").classList.add("active");
+  $("profileButton").classList.remove("active");
+
+};
+
+
+$("profileButton").onclick = () => {
+
+  $("homeSection").classList.add("hidden");
+  $("profileSection").classList.remove("hidden");
+
+  $("homeButton").classList.remove("active");
+  $("profileButton").classList.add("active");
+
+};
+
+
+$("saveProfileButton").onclick = async () => {
+
+  if(!currentUser) return;
+
+  const username =
+    $("profileUsername").value.trim();
+
+  if(!username){
+
+    showMessage(
+      $("profileMessage"),
+      "Le nom ne peut pas être vide.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  const {data,error} =
+    await supabaseClient
+      .from("profiles")
+      .update({
+        username:username
+      })
+      .eq("id",currentUser.id)
+      .select()
+      .single();
+
+  if(error){
+
+    showMessage(
+      $("profileMessage"),
+      "Impossible d'enregistrer : " + error.message,
+      "error"
+    );
+
+    return;
+
+  }
+
+  currentProfile = data;
+
+  $("headerUsername").textContent =
+    data.username;
+
+  $("dashboardUsername").textContent =
+    data.username;
+
+  showMessage(
+    $("profileMessage"),
+    "Profil enregistré avec succès.",
+    "success"
+  );
+
+};
+
+
+async function checkSession(){
+
+  const {data} =
+    await supabaseClient.auth.getSession();
+
+  if(data.session){
+
+    await startApp(data.session.user);
+
+  }else{
+
+    showLogin();
+
+  }
+
+}
+
+
+supabaseClient.auth.onAuthStateChange(
+  async (event,session) => {
+
+    if(session && !currentUser){
+
+      await startApp(session.user);
+
+    }
+
+  }
+);
+
+
+checkSession();
+
 </script>
+
 </body>
 </html>
